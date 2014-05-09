@@ -1,0 +1,39 @@
+{
+    "name": "luismayta/zrt",
+    "description": "Library",
+    "keywords": [
+        "Library"
+    ],
+    "license": "MIT",
+	"config": {
+    	"process-timeout": 5000
+    },
+    "authors": [
+        {
+            "name": "luismayta",
+            "email": "slovacus@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "homepage": "http://github.com/zrt",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework1": "1.12.5"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "dev-master",
+        "phpunit/phpunit": "3.7.27",
+        "phpunit/dbunit": "1.2.3",
+        "fabpot/php-cs-fixer": "dev-master"
+    },
+    "autoload": {
+        "psr-0":{
+            "Zrt":"Src/"
+        }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "config": {
+        "bin-dir": "bin/"
+    }
+}
