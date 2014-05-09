@@ -9,7 +9,6 @@
  * @version $Id: RpxNow.php 69 2010-09-08 12:32:03Z jamie $
  */
 
-
 /**
  * Allows authentication using Facebook.
  *
@@ -37,30 +36,24 @@ class Zrt_Auth_Adapter_Facebook
     protected $_signedRequest = null;
     protected $_result = null;
 
-
-    public function __construct( $applicationId , $applicationSecret ,
-                                 $localAuthAdapter , $url = null )
+    public function __construct($applicationId , $applicationSecret ,
+                                 $localAuthAdapter , $url = null)
         {
         $this->setApplicationId( $applicationId )
                 ->setApplicationSecret( $applicationSecret )
                 ->setLocalAuthAdapter( $localAuthAdapter );
 
-        if ( null !== $url )
-            {
+        if (null !== $url) {
             $this->setUrl( $url );
             }
 
-
         }
 
-
-    public function setLocalAuthAdapter( $localAuthAdapter )
+    public function setLocalAuthAdapter($localAuthAdapter)
         {
         $this->_localAuthAdapter = $localAuthAdapter;
 
-
         }
-
 
     /**
      * Gets the adapter used to authenticate locally.
@@ -71,53 +64,45 @@ class Zrt_Auth_Adapter_Facebook
         {
         return $this->_localAuthAdapter;
 
-
         }
 
-
-    public function setApplicationId( $applicationId )
+    public function setApplicationId($applicationId)
         {
         $this->_applicationId = $applicationId;
-        return $this;
 
+        return $this;
 
         }
 
-
-    public function setApplicationSecret( $applicationSecret )
+    public function setApplicationSecret($applicationSecret)
         {
         $this->_applicationSecret = $applicationSecret;
-        return $this;
 
+        return $this;
 
         }
 
-
-    public function setSignedRequest( $signedRequest )
+    public function setSignedRequest($signedRequest)
         {
         $this->_signedRequest = $signedRequest;
-        return $this;
 
+        return $this;
 
         }
 
-
-    public function setUrl( $url )
+    public function setUrl($url)
         {
         $this->_url = $url;
-        return $this;
 
+        return $this;
 
         }
 
-
-    protected function _base64UrlDecode( $input )
+    protected function _base64UrlDecode($input)
         {
         return base64_decode( strtr( $input , '-_' , '+/' ) );
 
-
         }
-
 
     /**
      * Authenticates via cURL.
@@ -127,8 +112,7 @@ class Zrt_Auth_Adapter_Facebook
     public function authenticate()
         {
 
-        if ( !$this->_applicationId || !$this->_applicationSecret || !$this->_signedRequest )
-            {
+        if (!$this->_applicationId || !$this->_applicationSecret || !$this->_signedRequest) {
             throw new Zend_Auth_Adapter_Exception( "Missing information for Facebook authentication." );
             }
 
@@ -138,8 +122,7 @@ class Zrt_Auth_Adapter_Facebook
         $data = json_decode( $this->_base64UrlDecode( $payload ) , true );
 
         // Check for correct signing algorithm.
-        if ( strtoupper( $data['algorithm'] ) !== 'HMAC-SHA256' )
-            {
+        if ( strtoupper( $data['algorithm'] ) !== 'HMAC-SHA256' ) {
             $this->getRequest()->setParam( 'error_handler' ,
                                            Zrt_Auth_Adapter_Facebook::EXCEPTION_UNKNOWN_ALGORITHM );
             $this->_forward( 'error' , 'error' );
@@ -148,8 +131,7 @@ class Zrt_Auth_Adapter_Facebook
         // Check for correct signature
         $expectedSignature = hash_hmac( 'sha256' , $payload ,
                                         $this->_applicationSecret , $raw = true );
-        if ( $signature !== $expectedSignature )
-            {
+        if ($signature !== $expectedSignature) {
             $this->getRequest()->setParam( 'error_handler' ,
                                            Zrt_Auth_Adapter_Facebook::EXCEPTION_BAD_SIGNATURE );
             $this->_forward( 'error' , 'error' );
@@ -161,9 +143,7 @@ class Zrt_Auth_Adapter_Facebook
 
         return new Zend_Auth_Result( Zend_Auth_Result::SUCCESS , $data['user_id'] , array( 'Authentication Successful' ) );
 
-
         }
-
 
     /**
      * Gets the result of the authentication attempt.
@@ -172,11 +152,6 @@ class Zrt_Auth_Adapter_Facebook
         {
         return $this->_result;
 
-
         }
 
-
     }
-
-
-?>

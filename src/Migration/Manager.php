@@ -65,18 +65,21 @@ class Zrt_Migration_Manager
     private function setAdapter($adapter)
     {
         $this->_db = $adapter;
+
         return $this;
     }
 
     private function setDeltaPath($deltaPath)
     {
         $this->_deltaPath = $deltaPath;
+
         return $this;
     }
 
     private function setLog(Zend_Log $log)
     {
         $this->_log = $log;
+
         return $this;
     }
 
@@ -87,6 +90,7 @@ class Zrt_Migration_Manager
             self::DBVERSION_TABLE_NAME
         );
         $version = $v->fetch();
+
         return (int) $version[self::DBVERSION_COL_NAME];
     }
 

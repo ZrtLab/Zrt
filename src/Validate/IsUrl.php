@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * @author Ron Dobley
  */
@@ -19,10 +18,9 @@ class Zrt_Validate_IsUrl
      * @var array
      */
     protected $_messageTemplates = array(
-        self::INVALID_URL => "'%value%' is not a valid URL. It must 
+        self::INVALID_URL => "'%value%' is not a valid URL. It must
             start with http(s):// and be valid." ,
     );
-
 
     /**
      * Defined by Zend_Validate_Interface
@@ -30,43 +28,41 @@ class Zrt_Validate_IsUrl
      * Returns true if and only if the $value is a valid url that starts with http(s)://
      * and the hostname is a valid TLD
      *
-     * @param  string $value
+     * @param  string                  $value
      * @throws Zend_Validate_Exception if a fatal error occurs for validation process
      * @return boolean
      */
-    public function isValid( $value )
+    public function isValid($value)
         {
-        if ( !is_string( $value ) )
-            {
+        if ( !is_string( $value ) ) {
             $this->_error( self::INVALID_URL );
+
             return false;
             }
 
         $this->_setValue( $value );
         //get a Zend_Uri_Http object for our URL, this will only accept http(s) schemes
-        try
-            {
+        try {
             $uriHttp = Zend_Uri_Http::fromString( $value );
-            }
-        catch ( Zend_Uri_Exception $e )
-            {
+            } catch ( Zend_Uri_Exception $e ) {
             $this->_error( self::INVALID_URL );
+
             return false;
             }
 
-        //if we have a valid URI then we check the hostname for valid TLDs, 
+        //if we have a valid URI then we check the hostname for valid TLDs,
         //and not local urls
         $hostnameValidator = new Zend_Validate_Hostname(
                         Zend_Validate_Hostname::ALLOW_DNS
         ); //do not allow local hostnames, this is the default
 
-        if ( !$hostnameValidator->isValid( $uriHttp->getHost() ) )
-            {
+        if ( !$hostnameValidator->isValid( $uriHttp->getHost() ) ) {
             $this->_error( self::INVALID_URL );
+
             return false;
             }
+
         return true;
         }
-
 
     }

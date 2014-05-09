@@ -15,9 +15,8 @@ require_once 'Zrt/Filter/ImageSize/Strategy/Fit.php';
  */
 require_once 'Zend/Filter/Exception.php';
 
-
 /**
- * Filter for resizing images.  
+ * Filter for resizing images.
  */
 class Zrt_Filter_ImageSize
         implements Zend_Filter_Interface
@@ -44,8 +43,8 @@ class Zrt_Filter_ImageSize
     const OVERWRITE_CACHE_OLDER = 'cache_older';
 
     /**
-     * Overwrite nothing. 
-     * If something is in the way, an exception is thrown. 
+     * Overwrite nothing.
+     * If something is in the way, an exception is thrown.
      * This is the default.
      * @var string
      */
@@ -60,7 +59,7 @@ class Zrt_Filter_ImageSize
 
     /**
      * Flag defining the behaviour regarding overwriting existing files.
-     * By default nothing is overwritten. 
+     * By default nothing is overwritten.
      * @var string
      */
     protected $_overwriteMode = self::OVERWRITE_NONE;
@@ -108,38 +107,32 @@ class Zrt_Filter_ImageSize
      */
     protected $_strategy = null;
 
-
     /**
      * Returns the result of filtering $value
      *
-     * @param  string $value Path to an image.
+     * @param  string                $value Path to an image.
      * @throws Zend_Filter_Exception If filtering $value is impossible
-     * @return string Path to the resized image.
+     * @return string                Path to the resized image.
      */
-    public function filter( $value )
+    public function filter($value)
         {
-        if ( !extension_loaded( 'gd' ) )
-            {
+        if ( !extension_loaded( 'gd' ) ) {
             throw new Zend_Filter_Exception( 'GD extension is not available. Can\'t process image.' );
             }
 
-        if ( !file_exists( $value ) )
-            {
+        if ( !file_exists( $value ) ) {
             throw new Zend_Filter_Exception( 'Image does not exist: ' . $value );
             }
 
         $outputPath = $this->getThumbnailPath( $value );
 
-        if ( file_exists( $outputPath ) )
-            {
-            switch ( $this->_overwriteMode )
-                {
+        if ( file_exists( $outputPath ) ) {
+            switch ($this->_overwriteMode) {
                 case self::OVERWRITE_ALL:
                     // just do it.
                     break;
                 case self::OVERWRITE_CACHE_OLDER:
-                    if ( filemtime( $value ) < filemtime( $outputPath ) )
-                        {
+                    if ( filemtime( $value ) < filemtime( $outputPath ) ) {
                         // noting to do.
                         return $outputPath;
                         }
@@ -153,20 +146,19 @@ class Zrt_Filter_ImageSize
 
         $resized = $this->_resize( $value );
         $type = $this->getType( $value );
+
         return $this->_writeImage( $resized , $type , $outputPath );
         }
 
-
     /**
      * Load the image and resize it using the assigned strategy.
-     * @param string $filename Filename of the input file.
+     * @param  string   $filename Filename of the input file.
      * @return resource GD image resource.
      */
-    protected function _resize( $filename )
+    protected function _resize($filename)
         {
         $image = imageCreateFromString( file_get_contents( $filename ) );
-        if ( false === $image )
-            {
+        if (false === $image) {
             throw new Zend_Filter_Exception( 'Can\'t load image: ' . $filename );
             }
 
@@ -176,26 +168,22 @@ class Zrt_Filter_ImageSize
         return $resized;
         }
 
-
     /**
      * Set the JPEG output compression.
-     * @param int $q A value between 1 and 100.
+     * @param  int                   $q A value between 1 and 100.
      * @return Zend_Filter_ImageSize Fluent interface
      */
-    public function setQuality( $q )
+    public function setQuality($q)
         {
-        if ( $q > 100 )
-            {
+        if ($q > 100) {
             $q = 100;
-            }
-        elseif ( $q < 1 )
-            {
+            } elseif ($q < 1) {
             $q = 1;
             }
         $this->_quality = intval( $q );
+
         return $this;
         }
-
 
     /**
      * Get the JPEG output compression.
@@ -206,18 +194,17 @@ class Zrt_Filter_ImageSize
         return $this->_quality;
         }
 
-
     /**
      * Set the strategy for resizing.
-     * @param Zend_Filter_ImageSize_Strategy_Interface $strategy
-     * @return Zend_Filter_ImageSize Fluent interface
+     * @param  Zend_Filter_ImageSize_Strategy_Interface $strategy
+     * @return Zend_Filter_ImageSize                    Fluent interface
      */
-    public function setStrategy( Zend_Filter_ImageSize_Strategy_Interface $strategy )
+    public function setStrategy(Zend_Filter_ImageSize_Strategy_Interface $strategy)
         {
         $this->_strategy = $strategy;
+
         return $this;
         }
-
 
     /**
      * Returns the strategy for resizing.
@@ -225,25 +212,24 @@ class Zrt_Filter_ImageSize
      */
     public function getStrategy()
         {
-        if ( is_null( $this->_strategy ) )
-            {
+        if ( is_null( $this->_strategy ) ) {
             $this->_strategy = new Zend_Filter_ImageSize_Strategy_Fit();
             }
+
         return $this->_strategy;
         }
 
-
     /**
      * Set the output width in pixels.
-     * @param int $width
+     * @param  int                   $width
      * @return Zend_Filter_ImageSize Fluent interface
      */
-    public function setWidth( $width )
+    public function setWidth($width)
         {
         $this->_width = $width > 0 ? $width : 1;
+
         return $this;
         }
-
 
     /**
      * Get the output width in pixels.
@@ -254,18 +240,17 @@ class Zrt_Filter_ImageSize
         return $this->_width;
         }
 
-
     /**
      * Set the output height in pixels.
-     * @param int $height
+     * @param  int                   $height
      * @return Zend_Filter_ImageSize Fluent interface
      */
-    public function setHeight( $height )
+    public function setHeight($height)
         {
         $this->_height = $height > 0 ? $height : 1;
+
         return $this;
         }
-
 
     /**
      * Get the output height in pixels.
@@ -276,18 +261,17 @@ class Zrt_Filter_ImageSize
         return $this->_height;
         }
 
-
     /**
      * Set the directory to save output in.
-     * @param string $dir
+     * @param  string                $dir
      * @return Zend_Filter_ImageSize Fluent interface
      */
-    public function setThumnailDirectory( $dir )
+    public function setThumnailDirectory($dir)
         {
         $this->_outputDir = $dir;
+
         return $this;
         }
-
 
     /**
      * Get the directory where the output is saved in.
@@ -298,39 +282,36 @@ class Zrt_Filter_ImageSize
         return $this->_outputDir;
         }
 
-
     /**
      * Calculates the path where the thumbnail of a given file is going to be
      * saved.
-     * 
+     *
      * @param $filename
      * @return string
      */
-    public function getThumbnailPath( $filename )
+    public function getThumbnailPath($filename)
         {
         return $this->getThumbnailDirectory()
                 . DIRECTORY_SEPARATOR
                 . $this->getThumbnailBasename( $filename );
         }
 
-
     /**
      * Calculate the filename of a thumbnail by a given filename.
-     * 
-     * The thumbnail filename is built like this: 
+     *
+     * The thumbnail filename is built like this:
      * <basename>-<width>x<height>[.<extension>]
-     * 
+     *
      * @param $filename string
      * @return string
      */
-    public function getThumbnailBasename( $filename )
+    public function getThumbnailBasename($filename)
         {
         $chunks = explode( '.' , strrev( basename( $filename ) ) , 2 );
         $basename = strrev( array_pop( $chunks ) );
         $ext = strrev( array_pop( $chunks ) );
 
-        switch ( $this->getType( $filename ) )
-            {
+        switch ( $this->getType( $filename ) ) {
             case 'jpeg': $ext = '.jpg';
                 break;
             case 'gif': $ext = '.gif';
@@ -349,37 +330,33 @@ class Zrt_Filter_ImageSize
         );
         }
 
-
     /**
      * Set the output filetype. This can be one of the following values:
      * jpeg, png, gif, auto or NULL.
-     * 
-     * @param string | null $type
+     *
+     * @param  string | null        $type
      * @return Zend_Filter_ImageSize Fluent interface
      */
-    public function setType( $type )
+    public function setType($type)
         {
-        if ( !in_array( $type , array( 'jpeg' , 'png' , 'gif' , 'auto' , null ) ) )
-            {
+        if ( !in_array( $type , array( 'jpeg' , 'png' , 'gif' , 'auto' , null ) ) ) {
             throw new Zend_Filter_Exception( 'Unsupported output type: ' . $type );
             }
         $this->_type = $type;
+
         return $this;
         }
 
-
     /**
      * Get the output filetype.
-     * @param string $path
+     * @param  string $path
      * @return string
      */
-    public function getType( $path )
+    public function getType($path)
         {
-        if ( is_null( $this->_type ) || 'auto' == $this->_type )
-            {
+        if ( is_null( $this->_type ) || 'auto' == $this->_type ) {
             $fileinfo = getimagesize( $path );
-            switch ( $fileinfo[2] )
-                {
+            switch ($fileinfo[2]) {
                 case IMAGETYPE_GIF:
                     $outputType = 'gif';
                     break;
@@ -391,12 +368,10 @@ class Zrt_Filter_ImageSize
                     $outputType = 'jpeg';
                     break;
                 }
-            // don't override $this->_type. 
+            // don't override $this->_type.
             // Must remain the same for the next run.
             return $outputType;
-            }
-        else
-            {
+            } else {
             return $this->_type;
             }
         }
@@ -414,10 +389,10 @@ class Zrt_Filter_ImageSize
 
     /**
      * Set overwrite mode.
-     * @param string $mode
+     * @param  string                $mode
      * @return Zend_Filter_ImageSize Fluent interface
      */
-    public function setOverwriteMode( $mode )
+    public function setOverwriteMode($mode)
         {
         if ( (!in_array( $mode ,
                          array( self::OVERWRITE_ALL , self::OVERWRITE_NONE , self::OVERWRITE_CACHE_OLDER ) ) ) )
@@ -425,6 +400,7 @@ class Zrt_Filter_ImageSize
             throw new Zend_Filter_Exception( 'Unsupported overwrite mode: ' . $mode );
             }
         $this->_overwriteMode = $mode;
+
         return $this;
         }
 
@@ -432,23 +408,20 @@ class Zrt_Filter_ImageSize
     /**
      * Write the image to disk.
      *
-     * @param resource $resource GD resource
-     * @param string $origFilename
+     * @param  resource $resource     GD resource
+     * @param  string   $origFilename
      * @return string
      */
-    protected function _writeImage( $resource , $type , $outputPath )
+    protected function _writeImage($resource , $type , $outputPath)
         {
         $writeFunc = 'image' . $type;
-        if ( 'jpeg' == $type )
-            {
+        if ('jpeg' == $type) {
             $writeFunc( $resource , $outputPath , $this->getQuality() );
-            }
-        else
-            {
+            } else {
             $writeFunc( $resource , $outputPath );
             }
+
         return $outputPath;
         }
-
 
     }

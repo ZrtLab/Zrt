@@ -5,7 +5,6 @@
  * and open the template in the editor.
  */
 
-
 /**
  * Description of Acl
  *
@@ -15,9 +14,8 @@ class Zrt_Controller_Plugin_Acl
         extends Zend_Controller_Plugin_Abstract
     {
 
-
     //put your code here
-    public function preDispatch( Zend_Controller_Request_Abstract $request )
+    public function preDispatch(Zend_Controller_Request_Abstract $request)
         {
         parent::preDispatch( $request );
 
@@ -36,10 +34,7 @@ class Zrt_Controller_Plugin_Acl
         //set up access a roles
         $acl->allow( null , array( "error" , "error" ) );
 
-
-
         //set up access a Guest
-
 
         $acl->allow( "guest" , "default" );
 
@@ -47,20 +42,15 @@ class Zrt_Controller_Plugin_Acl
         $acl->allow( "user" , "default" );
         $acl->allow( 'user' , 'user' );
 
-
         //access of admistrator
         $acl->allow( 'admin' , null );
 
-
         $auth = Zend_Auth::getInstance();
 
-        if ( $auth->hasIdentity() )
-            {
+        if ( $auth->hasIdentity() ) {
             $identity = $auth->getIdentity();
             $role = strtolower( $identity->role );
-            }
-        else
-            {
+            } else {
             $role = 'guest';
             }
 
@@ -68,16 +58,12 @@ class Zrt_Controller_Plugin_Acl
         $controller = $request->controller;
         $action = $request->action;
 
-        if ( !$acl->isAllowed( $role , $module , $controller , $action ) )
-            {
-            if ( $role == 'guest' or $role === "" )
-                {
+        if ( !$acl->isAllowed( $role , $module , $controller , $action ) ) {
+            if ($role == 'guest' or $role === "") {
                 $request->setModuleName( 'default' );
                 $request->setControllerName( 'usuario' );
                 $request->setActionName( 'index' );
-                }
-            else
-                {
+                } else {
                 $request->setModuleName( 'default' );
                 $request->setControllerName( "error" );
                 $request->setActionName( "noauth" );
@@ -85,7 +71,4 @@ class Zrt_Controller_Plugin_Acl
             }
         }
 
-
     }
-
-?>

@@ -1,6 +1,5 @@
 <?php
 
-
 class Zrt_Form_Formy
         extends Zrt_Form
     {
@@ -72,14 +71,12 @@ class Zrt_Form_Formy
         array( 'HtmlTag' , array( 'tag' => 'p' , 'class' => 'element-button' ) ) ,
     );
 
-
-    public function __construct( $options = null )
+    public function __construct($options = null)
         {
         parent::__construct( $options );
 
 //$this->addElementPrefixPath('ZendY_Form_Decorator','ZendY/Form/Decorator','decorator');
         }
-
 
     /**
      * Load the default decorators
@@ -89,11 +86,10 @@ class Zrt_Form_Formy
     public function loadDefaultDecorators()
         {
 
-        if ( !$this->loadDefaultDecoratorsIsDisabled() )
-            {
+        if ( !$this->loadDefaultDecoratorsIsDisabled() ) {
 
 //$this->removeDecorator('DtDdWrapper');
-//$this->removeDecorator('DlWrapper'); 
+//$this->removeDecorator('DlWrapper');
 
             $this->clearDecorators()
                     ->setAttrib( 'accept-charset' , 'UTF-8' )
@@ -108,8 +104,7 @@ class Zrt_Form_Formy
             ;
             }
 
-        foreach ( $this->getDisplayGroups() as $group )
-            {
+        foreach ( $this->getDisplayGroups() as $group ) {
 
             if ( $group->loadDefaultDecoratorsIsDisabled() ) continue;
 
@@ -126,13 +121,11 @@ class Zrt_Form_Formy
             );
             }
 
-        foreach ( $this->getElements() as $element )
-            {
+        foreach ( $this->getElements() as $element ) {
 
             if ( $element->loadDefaultDecoratorsIsDisabled() ) continue;
 
-            switch ( $element->getType() )
-                {
+            switch ( $element->getType() ) {
 
                 case 'Zend_Form_Element_Hidden':
                     $element->setDecorators(
@@ -164,6 +157,5 @@ class Zrt_Form_Formy
 
         return $this;
         }
-
 
     }

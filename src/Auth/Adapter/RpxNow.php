@@ -9,7 +9,6 @@
  * @version $Id: RpxNow.php 69 2010-09-08 12:32:03Z jamie $
  */
 
-
 /**
  * Allows authentication against JanRain's Rpx platform (Engage).
  *
@@ -36,13 +35,12 @@ class Zrt_Auth_Adapter_RpxNow
     protected $_url = self::DEFAULT_RPX_URL;
 
 
-    public function __construct( $apiKey , $localAuthAdapter , $url = null )
+    public function __construct($apiKey , $localAuthAdapter , $url = null)
         {
         $this->setApiKey( $apiKey );
         $this->setLocalAuthAdapter( $localAuthAdapter );
 
-        if ( null !== $url )
-            {
+        if (null !== $url) {
             $this->setUrl( $url );
             }
 
@@ -50,7 +48,7 @@ class Zrt_Auth_Adapter_RpxNow
         }
 
 
-    public function setLocalAuthAdapter( $localAuthAdapter )
+    public function setLocalAuthAdapter($localAuthAdapter)
         {
         $this->_localAuthAdapter = $localAuthAdapter;
 
@@ -71,27 +69,30 @@ class Zrt_Auth_Adapter_RpxNow
         }
 
 
-    public function setToken( $token )
+    public function setToken($token)
         {
         $this->_token = $token;
+
         return $this;
 
 
         }
 
 
-    public function setApiKey( $apiKey )
+    public function setApiKey($apiKey)
         {
         $this->_apiKey = $apiKey;
+
         return $this;
 
 
         }
 
 
-    public function setUrl( $url )
+    public function setUrl($url)
         {
         $this->_url = $url;
+
         return $this;
 
 
@@ -106,8 +107,7 @@ class Zrt_Auth_Adapter_RpxNow
     public function authenticate()
         {
 
-        if ( !$this->_apiKey || !$this->_token || !$this->_url )
-            {
+        if (!$this->_apiKey || !$this->_token || !$this->_url) {
             throw new Zend_Auth_Adapter_Exception( "Missing information for Rpx authentication." );
             }
 
@@ -131,8 +131,7 @@ class Zrt_Auth_Adapter_RpxNow
 
         $authInfo = json_decode( $rawJson , true );
 
-        if ( 'ok' == $authInfo['stat'] )
-            {
+        if ('ok' == $authInfo['stat']) {
             $this->_result = $authInfo['profile'];
             $resultInfo = array(
                 'code' => Zend_Auth_Result::SUCCESS ,
@@ -141,9 +140,7 @@ class Zrt_Auth_Adapter_RpxNow
                     "Authentication Successful"
                 )
             );
-            }
-        else
-            {
+            } else {
             $resultInfo = array(
                 'code' => Zend_Auth_Result::FAILURE ,
                 'identity' => $this->_token ,
@@ -152,11 +149,10 @@ class Zrt_Auth_Adapter_RpxNow
                 )
             );
             }
+
         return new Zend_Auth_Result( $resultInfo['code'] , $resultInfo['identity'] , $resultInfo['messages'] );
 
-
         }
-
 
     /**
      * Gets the result of the authentication attempt.
@@ -165,11 +161,6 @@ class Zrt_Auth_Adapter_RpxNow
         {
         return $this->_result;
 
-
         }
 
-
     }
-
-
-?>

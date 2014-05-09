@@ -9,7 +9,6 @@ class Zrt_Layout_Controller_Plugin_Layout extends Zend_Layout_Controller_Plugin_
 
       $moduleName = $request->getModuleName();
 
-
       if (isset($config[$moduleName]['resources']['layout']['layout'])) {
       $layoutScript = $config[$moduleName]['resources']['layout']['layout'];
 
@@ -26,5 +25,3 @@ class Zrt_Layout_Controller_Plugin_Layout extends Zend_Layout_Controller_Plugin_
       }
      */
 }
-
-?>

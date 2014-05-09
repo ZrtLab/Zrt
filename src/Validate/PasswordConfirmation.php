@@ -1,6 +1,5 @@
 <?php
 
-
 class Zrt_Validate_PasswordConfirmation
         extends Zend_Validate_Abstract
     {
@@ -11,28 +10,24 @@ class Zrt_Validate_PasswordConfirmation
         self::NOT_MATCH => 'The passwords do not match'
     );
 
-
-    public function isValid( $value , $context = null )
+    public function isValid($value , $context = null)
         {
-        $value = ( string ) $value;
+        $value = (string) $value;
         $this->_setValue( $value );
 
-        if ( is_array( $context ) )
-            {
+        if ( is_array( $context ) ) {
             if ( isset( $context['clave'] )
                     && ($value == $context['clave']) )
                 {
                 return true;
                 }
-            }
-        elseif ( is_string( $context ) && ($value == $context) )
-            {
+            } elseif ( is_string( $context ) && ($value == $context) ) {
             return true;
             }
 
         $this->_error( self::NOT_MATCH );
+
         return false;
         }
-
 
     }

@@ -1,12 +1,10 @@
 <?php
 
-
 class Zrt_Controller_Plugin_Routes
         extends Zend_Controller_Plugin_Abstract
     {
 
-
-    public function routeStartup( Zend_Controller_Request_Abstract $request )
+    public function routeStartup(Zend_Controller_Request_Abstract $request)
         {
 
         $routes = array(
@@ -160,7 +158,4 @@ class Zrt_Controller_Plugin_Routes
         parent::routeStartup( $request );
         }
 
-
     }
-
-?>

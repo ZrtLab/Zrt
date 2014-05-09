@@ -1,6 +1,5 @@
 <?php
 
-
 class Zrt_Validate_Password
         extends Zend_Validate_Abstract
     {
@@ -68,27 +67,25 @@ class Zrt_Validate_Password
         self::STRING_EMPTY => "'%value%' is an empty string"
     );
 
-
     /**
      * Sets default option values for this instance
      *
      * @param  boolean $allowWhiteSpace
      * @return void
      */
-    public function __construct( $allowWhiteSpace = false )
+    public function __construct($allowWhiteSpace = false)
         {
-        $this->allowWhiteSpace = ( boolean ) $allowWhiteSpace;
-
+        $this->allowWhiteSpace = (boolean) $allowWhiteSpace;
 
         }
-
 
     /**
      * Sets the model to validate against.
      *
      * @param Zrt_Model $model
 
-      public function setModel(Zrt_Model $model) {
+      public function setModel(Zrt_Model $model)
+      {
       $this->_model = $model;
       } */
     /**
@@ -96,7 +93,8 @@ class Zrt_Validate_Password
      *
      * @param string
 
-      public function setIdentifier($identifier) {
+      public function setIdentifier($identifier)
+      {
       $this->_identifier = $identifier;
       } */
     /**
@@ -104,7 +102,8 @@ class Zrt_Validate_Password
      *
      * @param string
 
-      public function setField($field) {
+      public function setField($field)
+      {
       $this->_field = $field;
       } */
     /**
@@ -112,38 +111,36 @@ class Zrt_Validate_Password
      *
      * Returns true if and only if $value is unique in the specified table.
      *
-     * @param mixed $value
-     * @param array $context
+     * @param  mixed   $value
+     * @param  array   $context
      * @return boolean
      */
-
 
     /**
      * Defined by Zend_Validate_Interface
      *
      * Returns true if and only if $value contains only alphabetic and digit characters
      *
-     * @param  string $value
+     * @param  string  $value
      * @return boolean
      */
-    public function isValid( $value )
+    public function isValid($value)
         {
-        if ( !is_string( $value ) && !is_int( $value ) && !is_float( $value ) )
-            {
+        if ( !is_string( $value ) && !is_int( $value ) && !is_float( $value ) ) {
             $this->_error( self::INVALID );
+
             return false;
             }
 
         $this->_setValue( $value );
 
-        if ( '' === $value )
-            {
+        if ('' === $value) {
             $this->_error( self::STRING_EMPTY );
+
             return false;
             }
 
-        if ( null === self::$_filter )
-            {
+        if (null === self::$_filter) {
             /**
              * @see Zend_Filter_Alnum
              */
@@ -153,30 +150,26 @@ class Zrt_Validate_Password
 
         self::$_filter->allowWhiteSpace = false;
 
-        if ( $value != self::$_filter->filter( $value ) )
-            {
+        if ( $value != self::$_filter->filter( $value ) ) {
             $this->_error( self::NOT_ALNUM );
+
             return false;
             }
 
         return true;
 
-
         }
-
 
     /**
      * Returns code snippet used for client-side validation.
      *
-     * @param string $name The name of the element.
+     * @param  string  $name The name of the element.
      * @return boolean No client-side validation for unique constraint.
      */
-    public function getClientSideValidation( $name )
+    public function getClientSideValidation($name)
         {
         return false;
 
-
         }
-
 
     }

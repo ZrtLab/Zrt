@@ -1,10 +1,9 @@
 <?php
 
-
 /**
- * This service class is used for image operations within the application. The 
+ * This service class is used for image operations within the application. The
  * main function is to generate square avatars from an abritary sized image.
- * 
+ *
  * Use the images.ini file to configure settings
  */
 class Zrt_Service_Image
@@ -19,14 +18,13 @@ class Zrt_Service_Image
     protected $_imageTargetFilepath;
     protected $_tempFilepath;
 
-
     /**
      * Initiates the process of generating an avatar
      *
      * @param String $originalFilename
-     * @param String $targetFilename 
+     * @param String $targetFilename
      */
-    public function processImageAvata( $originalFilename , $targetFilename )
+    public function processImageAvata($originalFilename , $targetFilename)
         {
         $this->_setupConfiguration( 'avatar' );
         $this->_targetFilename = $targetFilename;
@@ -35,14 +33,13 @@ class Zrt_Service_Image
         $this->_resizeImage();
         }
 
-
     /**
      * Initiates the process of generating an avatar
      *
      * @param String $originalFilename
-     * @param String $targetFilename 
+     * @param String $targetFilename
      */
-    public function processImageProduct( $originalFilename , $targetFilename )
+    public function processImageProduct($originalFilename , $targetFilename)
         {
         $this->_setupConfiguration( 'product' );
         $this->_targetFilename = $targetFilename;
@@ -50,14 +47,13 @@ class Zrt_Service_Image
         $this->_resizeImage();
         }
 
-
     /**
      * Initiates the process of generating an avatar
      *
      * @param String $originalFilename
-     * @param String $targetFilename 
+     * @param String $targetFilename
      */
-    public function processImageEquipo( $originalFilename , $targetFilename )
+    public function processImageEquipo($originalFilename , $targetFilename)
         {
         $this->_setupConfiguration( 'equipo' );
         $this->_targetFilename = $targetFilename;
@@ -66,14 +62,13 @@ class Zrt_Service_Image
         $this->_resizeImage();
         }
 
-
     /**
      * Initiates the process of generating an avatar
      *
      * @param String $originalFilename
-     * @param String $targetFilename 
+     * @param String $targetFilename
      */
-    public function processImageThumb( $originalFilename , $targetFilename )
+    public function processImageThumb($originalFilename , $targetFilename)
         {
         $this->_setupConfiguration( 'thumb' );
         $this->_targetFilename = $targetFilename;
@@ -82,14 +77,13 @@ class Zrt_Service_Image
         $this->_resizeImage();
         }
 
-
     /**
      * Setup the target size and quality of the final image.
      *
-     * @param String $type : The type of image been processed (e.g. avatar or logo). The settings should be 
-     * 						 available in images.ini
+     * @param String $type : The type of image been processed (e.g. avatar or logo). The settings should be
+     *                     available in images.ini
      */
-    protected function _setupConfiguration( $type )
+    protected function _setupConfiguration($type)
         {
         $this->_configuration = new Zend_Config_Ini(
                         APPLICATION_PATH . $this->_configurationFilePath ,
@@ -102,14 +96,12 @@ class Zrt_Service_Image
         $this->_tempFilepath = $this->_configuration->path->uploadTemp;
         }
 
-
     /**
      * Resizes the image
      */
     protected function _resizeImage()
         {
-        if ( !isset( $this->_configuration ) )
-            {
+        if ( !isset( $this->_configuration ) ) {
             throw new Zend_Exception( 'image configuration has not been setup' );
             }
 
@@ -119,8 +111,7 @@ class Zrt_Service_Image
         $imageWidth = imagesx( $image );
         $imageHeight = imagesy( $image );
 
-        if ( $imageHeight > $imageWidth )
-            {
+        if ($imageHeight > $imageWidth) {
             $cropHeight = $imageWidth;
             $cropWidth = $imageWidth;
             $cropX = 0;
@@ -128,16 +119,14 @@ class Zrt_Service_Image
             ;
             }
 
-        if ( $imageHeight < $imageWidth )
-            {
+        if ($imageHeight < $imageWidth) {
             $cropHeight = $imageHeight;
             $cropWidth = $imageHeight;
             $cropX = ($imageWidth - $cropWidth) / 2;
             $cropY = 0;
             }
 
-        if ( $imageHeight == $imageWidth )
-            {
+        if ($imageHeight == $imageWidth) {
             $cropHeight = $imageHeight;
             $cropWidth = $imageWidth;
             $cropX = 0;
@@ -147,7 +136,7 @@ class Zrt_Service_Image
         $imagePlaceHolder = imagecreatetruecolor( $this->_targetWidth ,
                                                   $this->_targetHeight );
         imagecopyresampled( $imagePlaceHolder , $image , 0 , 0 ,
-                            ( int ) $cropX , ( int ) $cropY ,
+                            (int) $cropX , (int) $cropY ,
                             $this->_targetWidth , $this->_targetHeight ,
                             $cropWidth , $cropHeight );
         imagejpeg( $imagePlaceHolder ,
@@ -155,15 +144,13 @@ class Zrt_Service_Image
                    $this->_targetQuality );
         }
 
-
     /**
      *
-     * @param String $filename 
+     * @param String $filename
      */
-    public function deleteImage( $filename )
+    public function deleteImage($filename)
         {
         //@TODO unlink files to be deleted here
         }
-
 
     }

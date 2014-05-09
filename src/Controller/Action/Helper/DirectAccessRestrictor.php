@@ -9,7 +9,6 @@
  * @version $Id: DirectAccessRestrictor.php 69 2010-09-08 12:32:03Z jamie $
  */
 
-
 /**
  * Ensures the controller can't be accessed directly in the browser.
  *
@@ -25,11 +24,9 @@ class Zrt_Controller_Action_Helper_DirectAccessRestrictor
     {
         $frontRequest = $this->getFrontController()->getRequest();
         $thisRequest = $this->getActionController()->getRequest();
-        if ( $frontRequest->getControllerName() == $thisRequest->getControllerName() && $frontRequest->getModuleName() == $thisRequest->getModuleName() )
-        {
+        if ( $frontRequest->getControllerName() == $thisRequest->getControllerName() && $frontRequest->getModuleName() == $thisRequest->getModuleName() ) {
             return $this->getActionController()->getHelper( 'redirector' )->gotoUrl( "/" );
         }
     }
-
 
 }

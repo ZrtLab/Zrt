@@ -13,6 +13,3 @@ class Zrt_Exception_Api extends Zend_Exception
     }
 
 }
-
-
-?>

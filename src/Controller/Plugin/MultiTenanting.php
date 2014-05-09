@@ -9,7 +9,6 @@
  * @version $Id: MultiTenanting.php 69 2010-09-08 12:32:03Z jamie $
  */
 
-
 /**
  * Provides support for applications that are multi-tenanted by subdomain.
  *
@@ -44,9 +43,8 @@ class Zrt_Controller_Plugin_MultiTenanting
      */
     private $_resellerClass = null;
 
-
-    public function __construct( $databaseAdapterName , $tenantClass ,
-                                 $resellerClass = null )
+    public function __construct($databaseAdapterName , $tenantClass ,
+                                 $resellerClass = null)
         {
         $this->_databaseAdapterName = $databaseAdapterName;
 
@@ -57,8 +55,7 @@ class Zrt_Controller_Plugin_MultiTenanting
             }
         $this->_tenantClass = $tenantClass;
 
-        if ( null !== $resellerClass )
-            {
+        if (null !== $resellerClass) {
             if ( !in_array( 'Zrt_MultiTenant_Service_Reseller_Interface' ,
                             class_implements( $resellerClass ) ) )
                 {
@@ -67,9 +64,7 @@ class Zrt_Controller_Plugin_MultiTenanting
             $this->_resellerClass = $resellerClass;
             }
 
-
         }
-
 
     /**
      * Determines what the default module should be, based on the server name.
@@ -77,7 +72,7 @@ class Zrt_Controller_Plugin_MultiTenanting
      *
      * @param Zend_Controller_Request_Abstract $request
      */
-    public function preDispatch( Zend_Controller_Request_Abstract $request )
+    public function preDispatch(Zend_Controller_Request_Abstract $request)
         {
         $frontController = Zend_Controller_Front::getInstance();
 
@@ -95,25 +90,23 @@ class Zrt_Controller_Plugin_MultiTenanting
         // @todo Probably try-catch this as if the username isn't valid, it will throw a database exception.
         $tenantClass = $this->_tenantClass;
         $tenant = $tenantClass::findBySubdomain( $tenantDomain );
-        if ( !$tenant )
-            {
+        if (!$tenant) {
             // Can't use an exception because this is pre-dispatch and the error handler has not been loaded.
             $request->setParam( "error_handler" ,
                                 Zrt_Error::EXCEPTION_NOT_FOUND );
             $request->setActionName( 'error' )->setControllerName( 'error' );
+
             return;
             }
 
         // If this is a white-labeled application, find the reseller and test that it exists.
 
-        if ( null !== $this->_resellerClass )
-            {
+        if (null !== $this->_resellerClass) {
             $resellerDomain = implode( '.' , array_slice( $subdomains , 1 ) );
             $resellerClass = $this->_resellerClass;
 
             $reseller = $resellerClass::findByDomain( $resellerDomain );
-            if ( !$reseller )
-                {
+            if (!$reseller) {
                 // Can't use an exception because this is pre-dispatch and the error handler has not been loaded.
                 $request->setParam( "error_handler" ,
                                     Zrt_Error::EXCEPTION_NOT_FOUND );
@@ -127,8 +120,6 @@ class Zrt_Controller_Plugin_MultiTenanting
         Zrt_Application::setTenantName( $tenantDomain );
         Zend_Registry::set( 'tenant' , $tenant );
 
-
         }
-
 
     }

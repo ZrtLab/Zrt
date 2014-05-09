@@ -9,7 +9,6 @@
  * @version $Id: Interface.php 69 2010-09-08 12:32:03Z jamie $
  */
 
-
 /**
  * Interface also requiring a getResult() method.
  *
@@ -18,7 +17,6 @@
  */
 interface Zrt_Auth_Adapter_Interface extends Zend_Auth_Adapter_Interface
     {
-
 
     /**
      * Returns the result object.

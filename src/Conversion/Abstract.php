@@ -3,15 +3,15 @@
 interface Zrt_Conversion
 {
 
-    function Open($options);
+    public function Open($options);
 
-    function Close();
+    public function Close();
 
-    function Write($data);
+    public function Write($data);
 
-    function Read();
+    public function Read();
 
-    function ListWrite($data, $tranlate = null);
+    public function ListWrite($data, $tranlate = null);
 
-    function ListRead();
+    public function ListRead();
 }

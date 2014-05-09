@@ -13,7 +13,6 @@
  * @defgroup Zrt_Validation Zrt Validation
  */
 
-
 /**
  * Provides static validation functionality.
  *
@@ -25,12 +24,11 @@ class Zrt_Validate
 
     static $_validationMessages = null;
 
-
     /**
-     * @param  mixed    $value
-     * @param  string   $classBaseName
-     * @param  array    $args          OPTIONAL
-     * @param  mixed    $namespaces    OPTIONAL
+     * @param  mixed                   $value
+     * @param  string                  $classBaseName
+     * @param  array                   $args          OPTIONAL
+     * @param  mixed                   $namespaces    OPTIONAL
      * @return boolean
      * @throws Zend_Validate_Exception
      */
@@ -38,21 +36,17 @@ class Zrt_Validate
                                $namespaces = array( ) )
         {
         static::$_validationMessages = array( );
-        $namespaces = array_merge( ( array ) $namespaces ,
+        $namespaces = array_merge( (array) $namespaces ,
                                    self::$_defaultNamespaces ,
                                    array( 'Zend_Validate' ) );
         $className = ucfirst( $classBaseName );
-        try
-            {
-            if ( !class_exists( $className , false ) )
-                {
+        try {
+            if ( !class_exists( $className , false ) ) {
                 require_once 'Zend/Loader.php';
-                foreach ( $namespaces as $namespace )
-                    {
+                foreach ($namespaces as $namespace) {
                     $class = $namespace . '_' . $className;
                     $file = str_replace( '_' , DIRECTORY_SEPARATOR , $class ) . '.php';
-                    if ( Zend_Loader::isReadable( $file ) )
-                        {
+                    if ( Zend_Loader::isReadable( $file ) ) {
                         Zend_Loader::loadClass( $class );
                         $className = $class;
                         break;
@@ -61,66 +55,47 @@ class Zrt_Validate
                 }
 
             $class = new ReflectionClass( $className );
-            if ( $class->implementsInterface( 'Zend_Validate_Interface' ) )
-                {
-                if ( $class->hasMethod( '__construct' ) )
-                    {
+            if ( $class->implementsInterface( 'Zend_Validate_Interface' ) ) {
+                if ( $class->hasMethod( '__construct' ) ) {
                     $keys = array_keys( $args );
                     $numeric = false;
-                    foreach ( $keys as $key )
-                        {
-                        if ( is_numeric( $key ) )
-                            {
+                    foreach ($keys as $key) {
+                        if ( is_numeric( $key ) ) {
                             $numeric = true;
                             break;
                             }
                         }
 
-                    if ( $numeric )
-                        {
+                    if ($numeric) {
                         $object = $class->newInstanceArgs( $args );
-                        }
-                    else
-                        {
+                        } else {
                         $object = $class->newInstance( $args );
                         }
-                    }
-                else
-                    {
+                    } else {
                     $object = $class->newInstance();
                     }
 
-                if ( $object->isValid( $value ) )
-                    {
+                if ( $object->isValid( $value ) ) {
                     return true;
-                    }
-                else
-                    {
+                    } else {
                     static::$_validationMessages = $object->getMessages();
+
                     return false;
                     }
                 }
-            }
-        catch ( Zend_Validate_Exception $ze )
-            {
+            } catch ( Zend_Validate_Exception $ze ) {
             // if there is an exception while validating throw it
             throw $ze;
-            }
-        catch ( Exception $e )
-            {
+            } catch ( Exception $e ) {
             // fallthrough and continue for missing validation classes
             }
 
-
         }
-
 
     public static function getValidationMessages()
         {
         return static::$_validationMessages;
 
-
         }
-
 
     }

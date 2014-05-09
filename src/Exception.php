@@ -13,7 +13,6 @@
  * @defgroup Zrt_Exception Zrt Exception
  */
 
-
 /**
  * Defines a standard exception and methods for handling them,
  * based on the the environment.
@@ -24,18 +23,12 @@ class Zrt_Exception
         extends Exception
     {
 
-
-    public static function production_handler( $exception )
+    public static function production_handler($exception)
         {
         $logger = Zend_Registry::get( 'logger' );
         $logger->log( "Unhandled exception: " . $exception->getMessage() . "\n" . $exception->getTraceAsString() ,
                       Zend_Log::ALERT );
 
-
         }
 
-
     }
-
-
-?>

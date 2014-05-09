@@ -43,7 +43,7 @@ class Zrt_Conversion_Csv
     }
 
     /**
-     * 
+     *
      *
      * @return array
      */
@@ -55,7 +55,7 @@ class Zrt_Conversion_Csv
     public function ListWrite($data, $tranlate = null)
     {
         $cols = array_keys($data[0]);
-        
+
         if (!is_null($tranlate) and !isset($tranlate['prefix'])) {
             $tranlate['prefix'] = '';
         }
@@ -66,7 +66,7 @@ class Zrt_Conversion_Csv
             }
             if (!is_null($tranlate)) {
                 $cols[$key] = t($tranlate['prefix'] . '.' . $cols[$key]);
-                
+
             }
         }
 
@@ -83,9 +83,9 @@ class Zrt_Conversion_Csv
 
     public function ListRead()
     {
-        
+
         $data = array();
-        
+
         $is_nodata = true;
         while ($is_nodata) {
             $buf = $this->Read();
@@ -101,6 +101,7 @@ class Zrt_Conversion_Csv
             }
             $data[] = $row;
         }
+
         return $data;
     }
 

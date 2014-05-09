@@ -19,12 +19,12 @@ class Zrt_Form_EasyBib extends Zend_Form
     {
         $this->model = $model;
     }
-    
+
     /**
      * Proxie to Zend_Form::isValid()
      * calls buildBootstrapErrorDecorators for parent::isValid() returning false
      *
-     * @param  array $data
+     * @param  array   $data
      * @return boolean
      */
     public function isValid($values)
@@ -33,13 +33,15 @@ class Zrt_Form_EasyBib extends Zend_Form
         if ($validCheck === false) {
             $this->buildBootstrapErrorDecorators();
         }
+
         return $validCheck;
     }
 
     /**
      * Build Bootstrap Error Decorators
      */
-    public function buildBootstrapErrorDecorators() {
+    public function buildBootstrapErrorDecorators()
+    {
         foreach ($this->getErrors() AS $key=>$errors) {
             $htmlTagDecorator = $this->getElement($key)->getDecorator('HtmlTag');
             if (empty($htmlTagDecorator)) {

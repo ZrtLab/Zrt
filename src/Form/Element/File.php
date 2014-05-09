@@ -1,10 +1,8 @@
 <?php
 
-
 class Zrt_Form_Element_File
         extends Zend_Form_Element_File
     {
-
 
     public function init()
         {
@@ -27,12 +25,10 @@ class Zrt_Form_Element_File
                 ->setDescription( 'Upload a file with one of the following extensions: swf, jpg, jpeg, gif, png' );
         }
 
-
     // Override setValue (disabled in Zend_Form_Element_File)
-    public function setValue( $value )
+    public function setValue($value)
         {
         $this->_value = $value;
         }
-
 
     }

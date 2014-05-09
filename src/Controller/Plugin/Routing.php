@@ -9,7 +9,6 @@
  * @version $Id: Routing.php 50 2010-07-19 01:40:10Z jamie $
  */
 
-
 /**
  * class_description
  *
@@ -20,15 +19,14 @@ class Zrt_Controller_Plugin_Routing
         extends Zend_Controller_Plugin_Abstract
     {
 
-
     /**
      * Determines what the default module should be, based on the server name.
      * If we are visiting a subsite, checks that the subsite is valid.
      *
-     * @param Zend_Controller_Request_Abstract $request
+     * @param  Zend_Controller_Request_Abstract $request
      * @return bool
      */
-    public function preDispatch( Zend_Controller_Request_Abstract $request )
+    public function preDispatch(Zend_Controller_Request_Abstract $request)
         {
         $frontController = Zend_Controller_Front::getInstance();
 
@@ -47,8 +45,7 @@ class Zrt_Controller_Plugin_Routing
         $organisationModel = new Henka_Model_Organisation();
         $organisation = $organisationModel->fetchRow( $organisationModel->select()->where( 'name = ?' ,
                                                                                            $organisation->name ) );
-        if ( !$organisation )
-            {
+        if (!$organisation) {
             throw new Zend_Controller_Dispatcher_Exception( "Invalid organisation specified: $organisation->name" );
             }
 
@@ -57,8 +54,7 @@ class Zrt_Controller_Plugin_Routing
         $reseller = $resellerModel->fetchRow( $resellerModel->select()->where( 'id = ?' ,
                                                                                $organisation->reseller ) );
 
-        if ( $resellerDomain != $reseller->domain )
-            {
+        if ($resellerDomain != $reseller->domain) {
             // The specified organisation has somehow arrived at the wrong reseller
             // parent domain, so send them to the correct URL.
             // @todo - actually forward them to the correct URL.
@@ -69,11 +65,6 @@ class Zrt_Controller_Plugin_Routing
         Zend_Registry::set( 'organisation' , $organisation );
         Zend_Registry::set( 'reseller' , $reseller );
 
-
         }
 
-
     }
-
-
-?>

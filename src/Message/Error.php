@@ -5,7 +5,6 @@
  * and open the template in the editor.
  */
 
-
 /**
  * Description of Error
  *
@@ -17,5 +16,3 @@ class Zrt_Message_Error
     const NOT_MATCH = 'notMatch';
 
     }
-
-?>

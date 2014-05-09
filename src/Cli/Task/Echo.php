@@ -9,7 +9,6 @@
  * @version $Id: Echo.php 69 2010-09-08 12:32:03Z jamie $
  */
 
-
 /**
  * Simple task that echoes the supplied string back on the command line.
  *
@@ -29,7 +28,6 @@ class Zrt_Cli_Task_Echo
         'string|s=s' => 'The string to echo'
     );
 
-
     /**
      * The echo task must have a string to echo.
      *
@@ -37,23 +35,20 @@ class Zrt_Cli_Task_Echo
      */
     protected function _verifyGetoptRules()
         {
-        if ( null == $this->_parameters['string'] )
-            {
+        if (null == $this->_parameters['string']) {
             $this->_messages['string'] = 'You must specify a string to echo.';
+
             return false;
             }
+
         return true;
 
-
         }
-
 
     protected function _execute()
         {
         echo "Hello, " . $this->_parameters['string'] . PHP_EOL;
 
-
         }
-
 
     }

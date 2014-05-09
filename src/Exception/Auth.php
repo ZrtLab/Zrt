@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Description of Auth
  *
@@ -15,6 +14,3 @@ class Zrt_Exception_Auth extends Zend_Exception
     }
 
 }
-
-
-?>

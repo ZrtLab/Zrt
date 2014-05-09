@@ -10,7 +10,6 @@
  */
 require_once 'Zend/Test/PHPUnit/ControllerTestCase.php';
 
-
 /**
  * Controller test harness that boots an application with the specified components.
  *
@@ -50,7 +49,6 @@ class Zrt_Test_PHPUnit_ControllerTestCase_Http
      */
     protected $_mockBroker = null;
 
-
     /**
      * Resets the state after every test.
      */
@@ -58,9 +56,7 @@ class Zrt_Test_PHPUnit_ControllerTestCase_Http
         {
         $this->reset();
 
-
         }
-
 
     /**
      * Also clears any authentication session.
@@ -70,11 +66,10 @@ class Zrt_Test_PHPUnit_ControllerTestCase_Http
         require_once 'Zend/Auth.php';
         Zend_Registry::_unsetInstance();
         Zend_Auth::getInstance()->clearIdentity();
+
         return parent::reset();
 
-
         }
-
 
     protected function _bootstrap()
         {
@@ -90,18 +85,14 @@ class Zrt_Test_PHPUnit_ControllerTestCase_Http
         $this->_application->bootstrap( $this->_bootstrapComponents ,
                                         $this->_excludedBootstrapComponents );
 
-
         }
-
 
     public function setUp()
         {
         $this->bootstrap = array( $this , '_bootstrap' );
         parent::setUp();
 
-
         }
-
 
     /**
      * Performs exactly the same job as the parent class, but specifically enables the throwing of exceptions.
@@ -109,7 +100,7 @@ class Zrt_Test_PHPUnit_ControllerTestCase_Http
      * @param  string|null $url
      * @return void
      */
-    public function dispatch( $url = null )
+    public function dispatch($url = null)
         {
         // redirector should not exit
         $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper( 'redirector' );
@@ -120,8 +111,7 @@ class Zrt_Test_PHPUnit_ControllerTestCase_Http
         $json->suppressExit = true;
 
         $request = $this->getRequest();
-        if ( null !== $url )
-            {
+        if (null !== $url) {
             $request->setRequestUri( $url );
             }
         $request->setPathInfo( null );
@@ -133,61 +123,48 @@ class Zrt_Test_PHPUnit_ControllerTestCase_Http
                 ->throwExceptions( true )
                 ->returnResponse( false );
 
-        if ( $this->bootstrap instanceof Zend_Application )
-            {
+        if ($this->bootstrap instanceof Zend_Application) {
             $this->bootstrap->run();
-            }
-        else
-            {
+            } else {
             $this->frontController->dispatch();
             }
 
-
         }
-
 
     protected function _mock()
         {
-        if ( null === $this->_mockBroker )
-            {
+        if (null === $this->_mockBroker) {
             $this->_mockBroker = new Zrt_Test_Mock_Broker( APPLICATION_CLASS . '_Mock_' );
             }
+
         return $this->_mockBroker;
 
-
         }
-
 
     public function getMockObject()
         {
         return call_user_func_array( array( $this , 'getMock' ) ,
                                      func_get_args() );
 
-
         }
 
-
     // Additional Assertions
-
 
     /**
      * Asserts that we are in the expect context (json, xml etc).
      *
      * @param string $context
      */
-    public function assertContext( $context )
+    public function assertContext($context)
         {
         $this->_incrementAssertionCount();
         $actualContext = Zend_Controller_Action_HelperBroker::getStaticHelper( 'ContextSwitch' )->getCurrentContext();
-        if ( $context != $actualContext )
-            {
+        if ($context != $actualContext) {
             $msg = sprintf( 'Failed asserting context <"%s"> was "%s"' ,
                             $actualContext , $context );
             $this->fail( $msg );
             }
 
-
         }
-
 
     }

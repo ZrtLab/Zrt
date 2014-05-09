@@ -9,7 +9,6 @@
  * @version $Id$
  */
 
-
 /**
  * Sets a redirect session so that users can come back to the same page once they log in.
  *
@@ -25,18 +24,14 @@ class Zrt_Controller_Plugin_SetRedirect
      * @todo Only set and trigger the session if there is no login session.
      */
 
-
     public function dispatchLoopShutdown()
         {
 
-        if ( 'auth' != Zend_Controller_Front::getInstance()->getRequest()->getControllerName() )
-            {
+        if ( 'auth' != Zend_Controller_Front::getInstance()->getRequest()->getControllerName() ) {
             $redirectSession = new Zend_Session_Namespace( 'Redirect' );
             $redirectSession->location = $_SERVER['REQUEST_URI'];
             }
 
-
         }
-
 
     }

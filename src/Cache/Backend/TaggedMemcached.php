@@ -10,7 +10,6 @@
  */
 require_once 'Zend/Cache/Backend/Memcached.php';
 
-
 /**
  * Memcached backend that provides tagging.
  *
@@ -30,20 +29,17 @@ class Zrt_Cache_Backend_TaggedMemcached
 
     protected $_tagData = array( );
 
-
     public function getIds()
         {
         $tagData = $this->_getTagData();
         $return = array( );
-        foreach ( $tagData as $tag => $ids )
-            {
+        foreach ($tagData as $tag => $ids) {
             $return = array_merge( $return , $ids );
             }
+
         return array_unique( $return );
 
-
         }
-
 
     /**
      * Return an array of stored tags
@@ -53,33 +49,29 @@ class Zrt_Cache_Backend_TaggedMemcached
     public function getTags()
         {
         $tagData = $this->_getTagData();
+
         return array_keys( $tagData );
 
-
         }
-
 
     protected function _getTagData()
         {
         $shared = Zrt_Cache_Manager::isShared();
         $tagCache = $shared ? self::SHARED_TAG_CACHE : self::TENANT_TAG_CACHE;
-        if ( !array_key_exists( $tagCache , $this->_tagData ) )
-            {
+        if ( !array_key_exists( $tagCache , $this->_tagData ) ) {
             $key = $this->_getTagCacheKey();
             $data = $this->_memcache->get( $key );
-            if ( !$data )
-                {
+            if (!$data) {
                 $data = array( );
                 }
             $this->_tagData[$tagCache] = $data;
             }
-        return $this->_tagData[$tagCache];
 
+        return $this->_tagData[$tagCache];
 
         }
 
-
-    protected function _saveTagData( $tagData )
+    protected function _saveTagData($tagData)
         {
         $shared = Zrt_Cache_Manager::isShared();
         $tagCache = $shared ? self::SHARED_TAG_CACHE : self::TENANT_TAG_CACHE;
@@ -87,28 +79,21 @@ class Zrt_Cache_Backend_TaggedMemcached
         $this->_tagData[$tagCache] = $tagData;
         $this->_memcache->set( $key , $tagData , 0 , 0 );
 
-
         }
-
 
     protected function _getTagCacheKey()
         {
         return Zrt_Cache_Manager::multiTenantKey( self::TAG_CACHE_KEY_BASE );
 
-
         }
-
 
     public function save( $data , $id , $tags = array( ) ,
                           $specificLifetime = false )
         {
         $lifetime = $this->getLifetime( $specificLifetime );
-        if ( $this->_options['compression'] )
-            {
+        if ($this->_options['compression']) {
             $flag = MEMCACHE_COMPRESSED;
-            }
-        else
-            {
+            } else {
             $flag = 0;
             }
 
@@ -116,27 +101,24 @@ class Zrt_Cache_Backend_TaggedMemcached
         $result = @$this->_memcache->set( $id , array( $data , time() , $lifetime ) ,
                                           $flag , $lifetime );
 
-        if ( count( $tags ) > 0 )
-            {
+        if ( count( $tags ) > 0 ) {
             $tagData = $this->_getTagData();
-            foreach ( $tags as $tag )
-                {
+            foreach ($tags as $tag) {
                 $tagData[$tag][] = $id;
                 }
             $this->_saveTagData( $tagData );
             }
+
         return $result;
 
-
         }
-
 
     /**
      * Return an array of stored cache ids which match given tags
      *
      * In case of multiple tags, a logical AND is made between tags
      *
-     * @param array $tags array of tags
+     * @param  array $tags array of tags
      * @return array array of matching cache ids (string)
      */
     public function getIdsMatchingTags( $tags = array( ) )
@@ -146,23 +128,20 @@ class Zrt_Cache_Backend_TaggedMemcached
         $matchingTags = array_intersect_key( $tagData , array_flip( $tags ) );
         $removableKeys = array_pop( $potentials );
 
-        foreach ( $matchingTags as $tag => $keys )
-            {
+        foreach ($matchingTags as $tag => $keys) {
             $removableKeys = array_intersect( $removableKeys , $keys );
             }
 
         return $removableKeys;
 
-
         }
-
 
     /**
      * Return an array of stored cache ids which don't match given tags
      *
      * In case of multiple tags, a logical OR is made between tags
      *
-     * @param array $tags array of tags
+     * @param  array $tags array of tags
      * @return array array of not matching cache ids (string)
      */
     public function getIdsNotMatchingTags( $tags = array( ) )
@@ -179,7 +158,7 @@ class Zrt_Cache_Backend_TaggedMemcached
      *
      * In case of multiple tags, a logical AND is made between tags
      *
-     * @param array $tags array of tags
+     * @param  array $tags array of tags
      * @return array array of any matching cache ids (string)
      */
     public function getIdsMatchingAnyTags( $tags = array( ) )
@@ -189,8 +168,7 @@ class Zrt_Cache_Backend_TaggedMemcached
         $matchingTags = array_intersect_key( $tagData , array_flip( $tags ) );
 
         $return = array( );
-        foreach ( $matchingTags as $tag => $keys )
-            {
+        foreach ($matchingTags as $tag => $keys) {
             $return = array_merge( $return , $keys );
             }
 
@@ -220,20 +198,17 @@ class Zrt_Cache_Backend_TaggedMemcached
         }
 
 
-    protected function _clean( $keys )
+    protected function _clean($keys)
         {
         $tagData = $this->_getTagData();
 
-        foreach ( $keys as $key )
-            {
+        foreach ($keys as $key) {
             $this->_memcache->delete( $key );
             }
 
-        foreach ( array_keys( $tagData ) as $tag )
-            {
+        foreach ( array_keys( $tagData ) as $tag ) {
             $tagData[$tag] = array_diff( $tagData[$tag] , $keys );
-            if ( !$tagData[$tag] )
-                {
+            if (!$tagData[$tag]) {
                 unset( $tagData[$tag] );
                 }
             }
@@ -246,8 +221,7 @@ class Zrt_Cache_Backend_TaggedMemcached
     public function clean( $mode = Zend_Cache::CLEANING_MODE_ALL ,
                            $tags = array( ) )
         {
-        switch ( $mode )
-            {
+        switch ($mode) {
             case Zend_Cache::CLEANING_MODE_ALL:
                 return $this->_memcache->flush();
                 break;
@@ -274,8 +248,6 @@ class Zrt_Cache_Backend_TaggedMemcached
                 break;
             }
 
-
         }
-
 
     }

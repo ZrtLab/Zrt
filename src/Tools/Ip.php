@@ -62,7 +62,7 @@ class Zrt_Tools_Ip
 
     /**
      *
-     * @param type $ip
+     * @param  type $ip
      * @return type Decimal de Ip
      */
     public static function IP2LONG($ip)
@@ -73,6 +73,7 @@ class Zrt_Tools_Ip
             $d *= 256.0;
             $d += $b[$i];
         };
+
         return $d;
     }
 

@@ -13,7 +13,6 @@
  * @defgroup Zrt_Feedback Zrt Feedback
  */
 
-
 /**
  * Provides a session-based feedback mechanism that persists across
  * application requests.
@@ -29,7 +28,6 @@ class Zrt_Feedback
     const WARNING = 'warning';
     const ERROR = 'error';
 
-
     /**
      * Gets the session object.
      *
@@ -37,28 +35,24 @@ class Zrt_Feedback
      */
     protected static function _ensureSession()
         {
-        if ( null === self::$_session )
-            {
+        if (null === self::$_session) {
             self::$_session = new Zend_Session_Namespace( 'Feedback' );
             }
 
-
         }
-
 
     /**
      * Adds a message to the feedback stack and preserves it across the current session.
      *
-     * @param string $type
+     * @param string     $type
      * @param string|int $message
-     * @param string $callback The URL to put to to acknowledge the message.
+     * @param string     $callback The URL to put to to acknowledge the message.
      */
-    public static function add( $type , $message , $callback = null )
+    public static function add($type , $message , $callback = null)
         {
         self::_ensureSession();
 
-        switch ( $type )
-            {
+        switch ($type) {
             case Zrt_Feedback::INFO:
             case Zrt_Feedback::WARNING:
             case Zrt_Feedback::ERROR:
@@ -72,35 +66,29 @@ class Zrt_Feedback
                 throw new Zrt_Exception( 'Invalid type "' . $type . '" specified.' );
             }
 
-
         }
-
 
     public static function clean()
         {
         Zend_Session_Namespace::resetSingleInstance( 'Feedback' );
         self::$_session = null;
 
-
         }
-
 
     /**
      * Gets the currently buffered feedback.
      *
-     * @param string|array $types
+     * @param  string|array $types
      * @return unknown
      */
     public static function get( $types = array( ) , $clean = true )
         {
         self::_ensureSession();
 
-        if ( !is_array( $types ) )
-            {
+        if ( !is_array( $types ) ) {
             $types = array( $types );
             }
-        if ( !count( $types ) )
-            {
+        if ( !count( $types ) ) {
             $types = array(
                 Zrt_Feedback::INFO ,
                 Zrt_Feedback::WARNING ,
@@ -109,19 +97,15 @@ class Zrt_Feedback
             }
 
         $return = array( );
-        foreach ( $types as $type )
-            {
-            switch ( $type )
-                {
+        foreach ($types as $type) {
+            switch ($type) {
                 case Zrt_Feedback::INFO:
                 case Zrt_Feedback::ERROR:
                 case Zrt_Feedback::WARNING:
-                    if ( isset( self::$_session->$type ) && self::$_session->$type )
-                        {
+                    if ( isset( self::$_session->$type ) && self::$_session->$type ) {
                         $return[$type] = self::$_session->$type;
                         }
-                    if ( true === $clean )
-                        {
+                    if (true === $clean) {
                         unset( self::$_session->$type );
                         }
                     break;
@@ -130,10 +114,9 @@ class Zrt_Feedback
                     throw new Zrt_Exception( 'Invalid type "' . $type . '" specified.' );
                 }
             }
+
         return $return;
 
-
         }
-
 
     }

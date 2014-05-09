@@ -22,39 +22,39 @@ class Zrt_Conversion_Dbf
 
     public function Write($data)
     {
-        
+
     }
 
     public function Read()
     {
-        
+
     }
 
     public function ListWrite($data)
     {
         foreach ($data as $row) {
-            
+
         }
     }
 
     public function ListRead()
     {
         $count = dbase_numrecords($this->_dBase);
-        
+
         for ($i = 1; $i <= $count; $i++) {
             $row = dbase_get_record_with_names($this->_dBase, $i);
-            
+
         }
     }
 
     public function Close()
     {
-        
+
     }
 
     public function Open($options)
     {
-        
+
     }
 
 }

@@ -30,14 +30,15 @@ class Zrt_Auth_Adapter_DbTable_Auth
                 $row['zend_auth_credential_match'] = 1;
             }
         }
+
         return $this->_authenticateValidateResult($row);
     }
 
     /**
      * Genera contraseña
-     * 
-     * @param string $rawPassword
-     * @param string $algo Algoritmo usado para generar la contraseña. md5, sha1
+     *
+     * @param  string $rawPassword
+     * @param  string $algo        Algoritmo usado para generar la contraseña. md5, sha1
      * @return string
      */
     public static function generatePassword($rawPassword, $algo = 'sha1')
@@ -56,9 +57,9 @@ class Zrt_Auth_Adapter_DbTable_Auth
 
     /**
      * Retorna true si el password es correcto
-     * 
-     * @param string $rawPassword
-     * @param string $encPassword
+     *
+     * @param  string $rawPassword
+     * @param  string $encPassword
      * @return bool
      */
     public static function checkPassword($rawPassword, $encPassword)
@@ -84,4 +85,3 @@ class Zrt_Auth_Adapter_DbTable_Auth
     }
 
 }
-

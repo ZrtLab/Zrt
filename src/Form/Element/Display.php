@@ -9,7 +9,6 @@
  * @version $Id: Display.php 69 2010-09-08 12:32:03Z jamie $
  */
 
-
 /**
  * Display element
  *
@@ -27,20 +26,17 @@ class Zrt_Form_Element_Display
      */
     public $helper = 'formDisplay';
 
-
     /**
      * Sets the ignore flag on display attributes.
      *
      * @param unknown_type $config
      */
-    public function __construct( $config = null )
+    public function __construct($config = null)
         {
         parent::__construct( $config );
         $this->setIgnore( true );
 
-
         }
-
 
     /**
      * Load default decorators for Display attributes.
@@ -49,8 +45,7 @@ class Zrt_Form_Element_Display
      */
     public function loadDefaultDecorators()
         {
-        if ( $this->loadDefaultDecoratorsIsDisabled() )
-            {
+        if ( $this->loadDefaultDecoratorsIsDisabled() ) {
             return;
             }
 
@@ -58,21 +53,16 @@ class Zrt_Form_Element_Display
                               'decorator' );
 
         $decorators = $this->getDecorators();
-        if ( empty( $decorators ) )
-            {
+        if ( empty( $decorators ) ) {
             $this->addDecorator( 'RawValue' );
             }
 
-
         }
 
-
-    public function setText( $text )
+    public function setText($text)
         {
         $this->setAttrib( 'text' , $text );
 
-
         }
-
 
     }

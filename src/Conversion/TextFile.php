@@ -19,12 +19,12 @@ class Zrt_Conversion_TextFile
 
     public function Write($data)
     {
-        
+
     }
 
     public function Read()
     {
-        
+
     }
 
     public function ListWrite($data)
@@ -44,6 +44,7 @@ class Zrt_Conversion_TextFile
             $row = explode($this->_Delimiter, $str);
             $data[] = $row;
         }
+
         return $data;
     }
 

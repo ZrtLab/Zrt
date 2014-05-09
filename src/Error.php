@@ -13,7 +13,6 @@
  * @defgroup Zrt_Error Zrt Error
  */
 
-
 /**
  * Provides error triggering and handling.
  *
@@ -26,23 +25,21 @@ class Zrt_Error
 
     const EXCEPTION_NOT_FOUND = 'EXCEPTION_NOT_FOUND';
 
-
     /**
      * Handles notices, warnings and errors and turns them into exceptions
      * which can be handled by the exception handling mechanism.
      *
      * @todo Do some logging here?
-     * @param int $type
+     * @param int    $type
      * @param string $message
      * @param string $file
-     * @param int $line
+     * @param int    $line
      */
-    public static function handle( $type , $message , $file , $line )
+    public static function handle($type , $message , $file , $line)
         {
 
         $request = Zend_Controller_Front::getInstance()->getRequest();
-        if ( $request )
-            {
+        if ($request) {
             // Sets the parameter on the request.
             $request->setParam( 'error_handler' ,
                                 self::EXCEPTION_APPLICATION_ERROR );
@@ -50,8 +47,6 @@ class Zrt_Error
         die( '<pre>' . $message . "\n" . $file . " " . $line . '</pre>' );
         throw new Zrt_Exception( $message . "\n" . $file . " " . $line , $type );
 
-
         }
-
 
     }

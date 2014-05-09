@@ -15,7 +15,7 @@ class Zrt_Application_Resource_Log extends Zend_Application_Resource_Log
 //                                              CASE_LOWER );
             //$db = Zend_Registry::get( 'db' );
 //            $column = $options['db']['column'];
-//            
+//
 //            $writer = new Zend_Log_Writer_Db( $db , $options['db']['table'] , array(
 //                        $column['date'] => 'timestamp' ,
 //                        $column['ip'] => 'ip' ,

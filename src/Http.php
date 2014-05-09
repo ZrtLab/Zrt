@@ -13,7 +13,6 @@
  * @defgroup Zrt_Http Zrt HTTP
  */
 
-
 /**
  * Defines useful HTTP-related constants and functionality.
  *

@@ -9,7 +9,6 @@
  * @version $Id: Error.php 72 2010-09-14 01:56:33Z jamie $
  */
 
-
 /**
  * Default error controller for when something goes wrong.
  *
@@ -20,46 +19,38 @@ abstract class Zrt_Controller_Error
         extends Zend_Controller_Action
     {
 
-
     public function init()
         {
-        if ( null === $this->_getParam( 'error_handler' ) )
-            {
+        if ( null === $this->_getParam( 'error_handler' ) ) {
             // No error parameters means that the controller has been accessed directly, which is disallowed.
             return $this->_redirect( "/" );
             }
         parent::init();
 
-
         }
-
 
     public function errorAction()
         {
         $this->_helper->layout->setLayout( 'error' );
         $error = $this->_getParam( 'error_handler' );
-        if ( null === $error )
-            {
+        if (null === $error) {
             return;
             }
 
         $exceptions = array( );
-        foreach ( $this->getResponse()->getException() as $exception )
-            {
+        foreach ( $this->getResponse()->getException() as $exception ) {
             $exceptions[] = $exception->getMessage() . " " . $exception->getFile() . " " . $exception->getLine();
             }
         $this->view->exceptions = $exceptions;
 
         $errorType = ($error->type) ? $error->type : $error;
 
-        if ( Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER == $errorType )
-            {
+        if (Zend_Controller_Plugin_ErrorHandler::EXCEPTION_OTHER == $errorType) {
             // This was an error triggered during the application.
             $errorType = $error->exception->getCode();
             }
 
-        switch ( $errorType )
-            {
+        switch ($errorType) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
             case Zrt_Http::NOT_FOUND:
@@ -78,11 +69,6 @@ abstract class Zrt_Controller_Error
                 break;
             }
 
-
         }
 
-
     }
-
-
-?>

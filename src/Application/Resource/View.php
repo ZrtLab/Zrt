@@ -5,7 +5,7 @@ class Zrt_Application_Resource_View extends Zend_Application_Resource_View
 
     /**
      * @author slovacus
-     * @return type 
+     * @return type
      */
     public function getView()
     {

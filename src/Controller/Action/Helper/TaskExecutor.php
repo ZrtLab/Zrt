@@ -9,7 +9,6 @@
  * @version $Id: TaskExecutor.php 69 2010-09-08 12:32:03Z jamie $
  */
 
-
 /**
  * Provides a method for controllers to execute CLI tasks.
  *
@@ -42,19 +41,16 @@ class Zrt_Controller_Action_Helper_TaskExecutor
      */
     protected $_taskPrefix = '';
 
-
-    public function execute( Zrt_Cli_Getopt $getopt , $taskPrefix = '' )
+    public function execute(Zrt_Cli_Getopt $getopt , $taskPrefix = '')
         {
-        if ( !isset( $getopt->task ) )
-            {
+        if ( !isset( $getopt->task ) ) {
             throw new Zrt_Cli_Exception( "Task must be specified!" );
             }
         $this->_taskPrefix = $taskPrefix;
 
         // Get the normalised task name, and see if it exists.
         $taskClass = $this->_taskPrefix . $this->_normaliseTaskName( $getopt->task );
-        if ( !class_exists( $taskClass , true ) )
-            {
+        if ( !class_exists( $taskClass , true ) ) {
             throw new Zrt_Cli_Exception( "Invalid task '$getopt->task' specified." );
             }
 
@@ -63,8 +59,7 @@ class Zrt_Controller_Action_Helper_TaskExecutor
         $this->_task->execute();
 
         // Exit, unless we explicitly don't want to (e.g., for testing).
-        if ( !$this->_suppressExit )
-            {
+        if (!$this->_suppressExit) {
             exit( 0 );
             }
 
@@ -72,27 +67,23 @@ class Zrt_Controller_Action_Helper_TaskExecutor
         }
 
 
-    protected function _normaliseTaskName( $name )
+    protected function _normaliseTaskName($name)
         {
-        $filtered = str_replace( '_' , ' ' , ( string ) $name );
+        $filtered = str_replace( '_' , ' ' , (string) $name );
         $filtered = ucwords( strtolower( $filtered ) );
         $filtered = str_replace( ' ' , '' , $filtered );
-        return $filtered;
 
+        return $filtered;
 
         }
 
-
-    public function suppressExit( $suppressExit )
+    public function suppressExit($suppressExit)
         {
-        if ( !is_bool( $suppressExit ) )
-            {
+        if ( !is_bool( $suppressExit ) ) {
             throw new Zrt_Cli_Exception( __FUNCTION__ . " must be called with a boolean value" );
             }
         $this->_suppressExit = $suppressExit;
 
-
         }
-
 
     }

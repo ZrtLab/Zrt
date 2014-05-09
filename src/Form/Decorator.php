@@ -160,7 +160,7 @@ class Zrt_Form_Decorator
             )
         )
     );
-    
+
     /**
      * Captcha Decorator
      *
@@ -168,7 +168,7 @@ class Zrt_Form_Decorator
      */
     protected static $_CaptchaDecorator = array(
         'table' => array(
-            'Errors', 
+            'Errors',
             array(
                 array(
                     'data' => 'HtmlTag'
@@ -246,7 +246,7 @@ class Zrt_Form_Decorator
             )
         )
     );
-    
+
     /**
      * Multi Decorator
      *
@@ -370,7 +370,7 @@ class Zrt_Form_Decorator
      */
     protected static $_SubmitDecorator = array(
         'table' => array(
-            'ViewHelper', 
+            'ViewHelper',
             array(
                 array(
                     'data' => 'HtmlTag'
@@ -412,7 +412,7 @@ class Zrt_Form_Decorator
      */
     protected static $_ResetDecorator = array(
         'table' => array(
-            'ViewHelper', 
+            'ViewHelper',
             array(
                 array(
                     'data' => 'HtmlTag'
@@ -512,11 +512,12 @@ class Zrt_Form_Decorator
     /**
      * Set the form decorators by the given string format or by the default div style
      *
-     * @param object $objForm        Zend_Form pointer-reference
-     * @param string $constFormat    Project_Plugin_FormDecoratorDefinition constants
+     * @param  object $objForm     Zend_Form pointer-reference
+     * @param  string $constFormat Project_Plugin_FormDecoratorDefinition constants
      * @return NULL
      */
-    public static function setFormDecorator(Zend_Form $form, $format = self::BOOTSTRAP, $submit_str = 'submit', $cancel_str = 'cancel') {
+    public static function setFormDecorator(Zend_Form $form, $format = self::BOOTSTRAP, $submit_str = 'submit', $cancel_str = 'cancel')
+    {
         /**
          * - disable default decorators
          * - set form & displaygroup decorators

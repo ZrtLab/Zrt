@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * ABS Library
  *
@@ -12,11 +11,9 @@
 class Zrt_View_Helper_Link
     {
 
-
-    public function link( $title , $href )
+    public function link($title , $href)
         {
         return "<a href=\"$href\" alt=\"$title\">$title</a>";
         }
-
 
     }

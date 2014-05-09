@@ -5,7 +5,6 @@
  * and open the template in the editor.
  */
 
-
 /**
  *
  */
@@ -21,28 +20,24 @@ class Zrt_Validate_NoX
         self::LAST_LETTER_IS_Z => 'El último caracter no puede ser zeta'
     );
 
-
-    public function isValid( $value , $context = null )
+    public function isValid($value , $context = null)
         {
-        $value = ( string ) $value;
+        $value = (string) $value;
         $this->_setValue( $value );
 
         if ( strtoupper( substr( $value , -1 ) ) != 'X' && strtoupper( substr( $value ,
                                                                                -1 ) ) != 'Z' )
             {
             return true;
-            }
-        else if ( strtoupper( substr( $value , -1 ) ) != 'X' )
-            {
+            } elseif ( strtoupper( substr( $value , -1 ) ) != 'X' ) {
             $this->_error( self::LAST_LETTER_IS_X );
+
             return false;
-            }
-        else if ( strtoupper( substr( $value , -1 ) ) != 'Z' )
-            {
+            } elseif ( strtoupper( substr( $value , -1 ) ) != 'Z' ) {
             $this->_error( self::LAST_LETTER_IS_Z );
+
             return false;
             }
         }
-
 
     }

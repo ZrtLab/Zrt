@@ -2,7 +2,7 @@
 
 /**
  *@author slovacus@gmail.com
- *  
+ *
  */
 class Zrt_Tools_Text
 {
@@ -11,6 +11,7 @@ class Zrt_Tools_Text
     {
         $cadena = substr($texto, 0, $longitud);
         $posicion = strripos($cadena, ' ');
+
         return substr($cadena, 0, $posicion);
     }
 
@@ -18,24 +19,22 @@ class Zrt_Tools_Text
     {
         $cadena = "";
         $cadena = substr($texto, 0, (strlen($texto) - $longitud));
+
         return $cadena;
     }
 
     public static function getJoinText($parameters = array(), $glue = " ")
     {
-
         return implode($glue, $parameters);
     }
 
     public static function addJsonComillas($json = "")
     {
-
         return preg_replace("/([a-zA-Z0-9_]+?):/", "\"$1\":", $json);
     }
 
     public static function cleanTexto($texto)
     {
-
         return preg_replace("/[^0-9.\+]/", "", $texto);
     }
 

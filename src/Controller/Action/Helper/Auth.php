@@ -31,6 +31,7 @@ class Zrt_Controller_Action_Helper_Auth extends Zend_Controller_Action_Helper_Ab
         }
         $controller = $this->getActionController();
         $this->view = $controller->view;
+
         return $this->view;
     }
 

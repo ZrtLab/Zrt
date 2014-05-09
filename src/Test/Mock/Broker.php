@@ -9,7 +9,6 @@
  * @version $Id: Broker.php 69 2010-09-08 12:32:03Z jamie $
  */
 
-
 /**
  * Decorator object that provides a gateway for mocking objects.
  *
@@ -22,21 +21,17 @@ class Zrt_Test_Mock_Broker
     protected $_prefix = null;
     protected $_mockGenerators = array( );
 
-
-    public function __construct( $prefix )
+    public function __construct($prefix)
         {
         $this->_prefix = $prefix;
 
-
         }
 
-
-    public function __call( $method , $arguments )
+    public function __call($method , $arguments)
         {
         include_once(ucfirst( $method ) . '.php');
 
-        if ( !array_key_exists( $method , $this->_mockGenerators ) )
-            {
+        if ( !array_key_exists( $method , $this->_mockGenerators ) ) {
             $mockClass = $this->_prefix . ucfirst( $method );
             $this->_mockGenerators[$method] = new $mockClass();
             }
@@ -45,8 +40,6 @@ class Zrt_Test_Mock_Broker
 
         return $this;
 
-
         }
-
 
     }

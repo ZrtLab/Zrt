@@ -1,6 +1,5 @@
 <?php
 
-
 abstract class Zrt_Controller_Processor
         implements Zrt_Controller_Processor_Interface
     {
@@ -12,14 +11,11 @@ abstract class Zrt_Controller_Processor
      */
     protected $_actionController = null;
 
-
-    public function __construct( Zrt_Controller_Common $actionController )
+    public function __construct(Zrt_Controller_Common $actionController)
         {
         $this->_actionController = $actionController;
 
-
         }
-
 
     /**
      * Returns the view for the current controller.
@@ -30,16 +26,12 @@ abstract class Zrt_Controller_Processor
         {
         return $this->getController()->view;
 
-
         }
-
 
     public function getController()
         {
         return $this->_actionController;
 
-
         }
-
 
     }

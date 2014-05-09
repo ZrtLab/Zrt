@@ -1,17 +1,17 @@
 <?php
 /**
  * TomatoCMS
- * 
+ *
  * LICENSE
  *
- * This source file is subject to the GNU GENERAL PUBLIC LICENSE Version 2 
+ * This source file is subject to the GNU GENERAL PUBLIC LICENSE Version 2
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
  * http://www.gnu.org/licenses/gpl-2.0.txt
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to license@tomatocms.com so we can send you a copy immediately.
- * 
+ *
  * @copyright	Copyright (c) 2009-2010 TIG Corporation (http://www.tig.vn)
  * @license		http://www.gnu.org/licenses/gpl-2.0.txt GNU GENERAL PUBLIC LICENSE Version 2
  * @version 	$Id: Abstract.php 3986 2010-07-25 16:32:46Z huuphuoc $
@@ -20,166 +20,167 @@
 
 abstract class Tomato_Image_Abstract
 {
-	/**
-	 * Watermark positions
-	 * @since 2.0.4
-	 */
-	const POS_TOP_LEFT 		= 'top_left';
-	const POS_TOP_RIGHT 	= 'top_right';
-	const POS_BOTTOM_LEFT 	= 'bottom_left';
-	const POS_BOTTOM_RIGHT 	= 'bottom_right';
-	const POS_MIDDLE_CENTER = 'middle_center';
-	
-	const FLIP_VERTICAL   = 'vertical';
-	const FLIP_HORIZONTAL = 'horizontal';
-	
-	/**
-	 * The file name
-	 * @var string
-	 */
-	protected $_file;
+    /**
+     * Watermark positions
+     * @since 2.0.4
+     */
+    const POS_TOP_LEFT 		= 'top_left';
+    const POS_TOP_RIGHT 	= 'top_right';
+    const POS_BOTTOM_LEFT 	= 'bottom_left';
+    const POS_BOTTOM_RIGHT 	= 'bottom_right';
+    const POS_MIDDLE_CENTER = 'middle_center';
 
-	/**
-	 * File type: gif, jpg, jpeg, png
-	 * @var string
-	 */
-	protected $_fileType;
+    const FLIP_VERTICAL   = 'vertical';
+    const FLIP_HORIZONTAL = 'horizontal';
 
-	/**
-	 * Width of image
-	 * @var int
-	 */
-	protected $_width;
+    /**
+     * The file name
+     * @var string
+     */
+    protected $_file;
 
-	/**
-	 * Height of image
-	 * @var int
-	 */
-	protected $_height;
-	
-	/**
-	 * The font used for creating watermark
-	 * @var string
-	 */
-	protected $_watermarkFont;
-	
-	/**
-	 * @param string $file
-	 */
-	public function setFile($file) 
-	{
-		$this->_file = $file;
+    /**
+     * File type: gif, jpg, jpeg, png
+     * @var string
+     */
+    protected $_fileType;
 
-		/**
-		 * Get size of image
-		 */
-		$info = getimagesize($this->_file);
+    /**
+     * Width of image
+     * @var int
+     */
+    protected $_width;
 
-		$this->_width  = $info[0];
-		$this->_height = $info[1];
+    /**
+     * Height of image
+     * @var int
+     */
+    protected $_height;
 
-		$ext = explode('.', $file);
-		$this->_fileType = strtolower($ext[count($ext) - 1]);
-	}
-	
-	/**
-	 * @param string $font
-	 */
-	public function setWatermarkFont($font)
-	{
-		$this->_watermarkFont = $font;
-		return $this;
-	}
-	
-	/**
-	 * Get image width
-	 * 
-	 * @return int
-	 */
-	public function getWidth()
-	{
-		return $this->_width;
-	}
-	
-	/**
-	 * Get image height
-	 * 
-	 * @return int
-	 */
-	public function getHeight()
-	{
-		return $this->_height;
-	}
+    /**
+     * The font used for creating watermark
+     * @var string
+     */
+    protected $_watermarkFont;
 
-	public function resizeLimit($newFile, $newWidth, $newHeight) 
-	{
-		$percent   = ($this->_width > $newWidth) ? (($newWidth * 100) / $this->_width) : 100;
-		$newWidth  = ($this->_width * $percent) / 100;
-		$newHeight = ($this->_height * $percent) / 100;
-		$this->_resize($newFile, $newWidth, $newHeight);
-	}
+    /**
+     * @param string $file
+     */
+    public function setFile($file)
+    {
+        $this->_file = $file;
 
-	public function resize($newFile, $newWidth, $newHeight) 
-	{
-		$this->_resize($newFile, $newWidth, $newHeight);
-	}
-	
-	public function crop($newFile, $newWidth, $newHeight, $resize = true, $cropX = null, $cropY = null) 
-	{
-		/**
-		 * Maintain ratio if image is smaller than resize
-		 */
-		$percent = ($this->_width > $newWidth) ? ($newWidth * 100) / ($this->_width) : 100;
+        /**
+         * Get size of image
+         */
+        $info = getimagesize($this->_file);
 
-		/**
-		 * Resize to one side to newWidth or newHeight
-		 */
-		$percentWidght 	  = ($newWidth * 100) / $this->_width;
-		$percentHeight 	  = ($newHeight * 100) / $this->_height;
-		$percent = ($percentWidght > $percentHeight) ? $percentWidght : $percentHeight;
-		if($percentWidght > $percentHeight){
-			$resizeWidth  = $newWidth;
-			$resizeHeight = ($this->_height * $percent) / 100;
-		} else {
-			$resizeHeight = $newHeight;
-			$resizeWidth  = ($this->_width * $percent) / 100;
-		}
+        $this->_width  = $info[0];
+        $this->_height = $info[1];
 
-		$cropX = (null == $cropX) ? ($resizeWidth - $newWidth) / 2 : $cropX;
-		$cropY = (null == $cropY) ? ($resizeHeight - $newHeight) / 2 : $cropY;
+        $ext = explode('.', $file);
+        $this->_fileType = strtolower($ext[count($ext) - 1]);
+    }
 
-		$this->_crop($newFile, $resizeWidth, $resizeHeight, $newWidth, $newHeight, $cropX, $cropY, $resize);
-	}	
+    /**
+     * @param string $font
+     */
+    public function setWatermarkFont($font)
+    {
+        $this->_watermarkFont = $font;
 
-	/**
-	 * @param string $newFile
-	 * @param int $angle
-	 * @return bool
-	 */
-	public abstract function rotate($newFile, $angle);
-	
-	/**
-	 * @since 2.0.4
-	 */
-	public abstract function flip($newFile, $mode);
+        return $this;
+    }
 
-	/**
-	 * @since 2.0.4
-	 */
-	public abstract function watermarkImage($overlayFile, $position);
+    /**
+     * Get image width
+     *
+     * @return int
+     */
+    public function getWidth()
+    {
+        return $this->_width;
+    }
 
-	/**
-	 * 
-	 * @param string $overlayText
-	 * @param string $position
-	 * @param array $param
-	 * @since 2.0.4
-	 */
-	public abstract function watermarkText($overlayText, $position, 
-							$param = array('color' => 'FFF', 'rotation' => 0, 'opacity' => 50, 'size' => null));
-	
-	protected abstract function _resize($newFile, $newWidth, $newHeight);
+    /**
+     * Get image height
+     *
+     * @return int
+     */
+    public function getHeight()
+    {
+        return $this->_height;
+    }
 
-	protected abstract function _crop($newFile, $resizeWidth, $resizeHeight, 
-								$newWidth, $newHeight, $cropX, $cropY, $resize = true);	
+    public function resizeLimit($newFile, $newWidth, $newHeight)
+    {
+        $percent   = ($this->_width > $newWidth) ? (($newWidth * 100) / $this->_width) : 100;
+        $newWidth  = ($this->_width * $percent) / 100;
+        $newHeight = ($this->_height * $percent) / 100;
+        $this->_resize($newFile, $newWidth, $newHeight);
+    }
+
+    public function resize($newFile, $newWidth, $newHeight)
+    {
+        $this->_resize($newFile, $newWidth, $newHeight);
+    }
+
+    public function crop($newFile, $newWidth, $newHeight, $resize = true, $cropX = null, $cropY = null)
+    {
+        /**
+         * Maintain ratio if image is smaller than resize
+         */
+        $percent = ($this->_width > $newWidth) ? ($newWidth * 100) / ($this->_width) : 100;
+
+        /**
+         * Resize to one side to newWidth or newHeight
+         */
+        $percentWidght 	  = ($newWidth * 100) / $this->_width;
+        $percentHeight 	  = ($newHeight * 100) / $this->_height;
+        $percent = ($percentWidght > $percentHeight) ? $percentWidght : $percentHeight;
+        if ($percentWidght > $percentHeight) {
+            $resizeWidth  = $newWidth;
+            $resizeHeight = ($this->_height * $percent) / 100;
+        } else {
+            $resizeHeight = $newHeight;
+            $resizeWidth  = ($this->_width * $percent) / 100;
+        }
+
+        $cropX = (null == $cropX) ? ($resizeWidth - $newWidth) / 2 : $cropX;
+        $cropY = (null == $cropY) ? ($resizeHeight - $newHeight) / 2 : $cropY;
+
+        $this->_crop($newFile, $resizeWidth, $resizeHeight, $newWidth, $newHeight, $cropX, $cropY, $resize);
+    }
+
+    /**
+     * @param  string $newFile
+     * @param  int    $angle
+     * @return bool
+     */
+    abstract public function rotate($newFile, $angle);
+
+    /**
+     * @since 2.0.4
+     */
+    abstract public function flip($newFile, $mode);
+
+    /**
+     * @since 2.0.4
+     */
+    abstract public function watermarkImage($overlayFile, $position);
+
+    /**
+     *
+     * @param string $overlayText
+     * @param string $position
+     * @param array  $param
+     * @since 2.0.4
+     */
+    abstract public function watermarkText($overlayText, $position,
+                            $param = array('color' => 'FFF', 'rotation' => 0, 'opacity' => 50, 'size' => null));
+
+    abstract protected function _resize($newFile, $newWidth, $newHeight);
+
+    abstract protected function _crop($newFile, $resizeWidth, $resizeHeight,
+                                $newWidth, $newHeight, $cropX, $cropY, $resize = true);
 }

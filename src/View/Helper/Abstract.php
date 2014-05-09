@@ -5,7 +5,7 @@ class Zrt_View_Helper_Abstract extends Zend_View_Helper_Abstract
 
     /**
      *
-     * @var Zend_Config 
+     * @var Zend_Config
      */
     protected $_config = null;
 

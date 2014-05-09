@@ -1,7 +1,7 @@
 <?php
 
 /**
- *@author slovacus 
+ *@author slovacus
  */
 class Zrt_Application_Resource_Session extends Zend_Application_Resource_Session
 {

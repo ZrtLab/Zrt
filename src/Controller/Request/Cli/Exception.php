@@ -9,7 +9,6 @@
  * @version $Id: Exception.php 69 2010-09-08 12:32:03Z jamie $
  */
 
-
 /**
  * CLI request exception base.
  *
@@ -19,5 +18,5 @@
 class Zrt_Controller_Request_Cli_Exception
         extends Exception
     {
-    
+
     }

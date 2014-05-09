@@ -8,7 +8,6 @@ require_once 'Zend/Application.php';
  * @defgroup Zrt_Application Zrt Application
  */
 
-
 /**
  * Defines an application that can lazily-load a config from a cache
  * or definition file.
@@ -45,46 +44,35 @@ abstract class Zrt_Application
      */
     protected $_useCacheForBootstrap = false;
 
-
     public static function getTenantName()
         {
         return self::$_tenantName;
 
-
         }
 
-
-    public static function setTenantName( $tenantName )
+    public static function setTenantName($tenantName)
         {
         self::$_tenantName = $tenantName;
 
-
         }
-
 
     public static function isDevelopment()
         {
         return ('development' == APPLICATION_ENV);
 
-
         }
-
 
     public static function isProduction()
         {
         return ('production' == APPLICATION_ENV);
 
-
         }
-
 
     public static function isTesting()
         {
         return ('testing' == APPLICATION_ENV);
 
-
         }
-
 
     /**
      * Create a new application instance.  Tries to load from cache where possible.
@@ -93,8 +81,8 @@ abstract class Zrt_Application
      * @param $configPaths
      * @param $useCacheForBootstrap
      */
-    public function __construct( $environment , array $configPaths ,
-                                 $useCacheForBootstrap = true )
+    public function __construct($environment , array $configPaths ,
+                                 $useCacheForBootstrap = true)
         {
         // Hydrate or create an application instance.
 
@@ -112,13 +100,11 @@ abstract class Zrt_Application
                                              $this->_bootstrapCacheTemplate );
 
         $config = Zrt_Cache_Manager::cache( $this->_bootstrapCacheName )->shared()->load( $configCacheKey );
-        if ( !$config )
-            {
+        if (!$config) {
             $configPath = array_shift( $configPaths );
 
             $config = new Zend_Config_Ini( $configPath , $environment , true );
-            foreach ( $configPaths as $configPath )
-                {
+            foreach ($configPaths as $configPath) {
                 $config->merge( new Zend_Config_Ini( $configPath , $environment ) );
                 }
 
@@ -136,9 +122,7 @@ abstract class Zrt_Application
         // Store a reference to the instance, should we need to retrieve it later.
         return parent::__construct( $environment , $config );
 
-
         }
-
 
     /**
      * Returns the URL to the application root, regardless of tenancy.
@@ -147,9 +131,7 @@ abstract class Zrt_Application
         {
         return self::$_scheme . self::$_host;
 
-
         }
-
 
     /**
      * Returns the URL to the application root, taking into account multi-tenancy if specified.
@@ -159,9 +141,7 @@ abstract class Zrt_Application
         return self::$_tenantName ? self::$_scheme . self::$_tenantName . '.' . self::$_host
                     : self::$_scheme . self::$_host;
 
-
         }
-
 
     /**
      * Gets routes for the application.
@@ -174,33 +154,29 @@ abstract class Zrt_Application
         // Hydrate or generate application routes.
         $routesCacheKey = "__routes__";
         $routes = Zrt_Cache_Manager::cache( $this->_bootstrapCacheName )->shared()->load( $routesCacheKey );
-        if ( !$routes )
-            {
+        if (!$routes) {
             $config = Zend_Registry::get( 'config' );
             $routes = new Zend_Config_Ini( $config->routes->path );
             Zrt_Cache_Manager::cache( $this->_bootstrapCacheName )->shared()->save( $routes ,
                                                                                     $routesCacheKey ,
                                                                                     array( 'routes' ) );
             }
+
         return $routes;
 
-
         }
-
 
     /**
      * Bootstraps the application, and allows for excluding of resources.
      *
      * @param null|string|array $resource
-     * @param array $excludedResources
+     * @param array             $excludedResources
      */
     public function bootstrap( $resource = null ,
                                array $excludedResources = array( ) )
         {
         return $this->getBootstrap()->setExcludedResources( $excludedResources )->bootstrap( $resource );
 
-
         }
-
 
     }

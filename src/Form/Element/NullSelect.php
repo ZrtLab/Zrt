@@ -1,6 +1,5 @@
 <?php
 
-
 class Zrt_Form_Element_NullSelect
         extends Zend_Form_Element_Select
     {
@@ -11,22 +10,20 @@ class Zrt_Form_Element_NullSelect
      */
     protected $_defaultTitle = 'Not Set';
 
-
-    public function setMultiOptions( array $data )
+    public function setMultiOptions(array $data)
         {
         $array = array( '' => $this->_defaultTitle ) + $data;
+
         return parent::setMultiOptions( $array );
 
-
         }
-
 
     /**
      * Sets the select box's default title.
      *
      * @param string $title
      */
-    public function setDefaultTitle( $title )
+    public function setDefaultTitle($title)
         {
         $this->_defaultTitle = $title;
 
@@ -41,17 +38,12 @@ class Zrt_Form_Element_NullSelect
      */
     public function getValue()
         {
-        if ( '' === $this->_value )
-            {
+        if ('' === $this->_value) {
             return null;
             }
-        return parent::getValue();
 
+        return parent::getValue();
 
         }
 
-
     }
-
-
-?>

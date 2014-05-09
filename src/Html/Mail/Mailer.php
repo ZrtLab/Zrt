@@ -1,7 +1,7 @@
 <?php
 
-class Zrt_Html_Mail_Mailer extends Zend_Mail {
-
+class Zrt_Html_Mail_Mailer extends Zend_Mail
+{
     static $fromName = "Luis Alberto Mayta Mamani";
     static $fromEmail = "slovacus@gmail.com";
 
@@ -17,7 +17,8 @@ class Zrt_Html_Mail_Mailer extends Zend_Mail {
      */
     protected $_view;
 
-    protected static function getDefaultView() {
+    protected static function getDefaultView()
+    {
         if (self::$_defaultView === null) {
             self::$_defaultView = new Zend_View();
             self::$_defaultView->setScriptPath(
@@ -25,6 +26,7 @@ class Zrt_Html_Mail_Mailer extends Zend_Mail {
                     '/views/scripts/mails'
             );
         }
+
         return self::$_defaultView;
     }
 
@@ -38,12 +40,15 @@ class Zrt_Html_Mail_Mailer extends Zend_Mail {
         $this->send();
     }
 
-    public function setViewParam($property, $value) {
+    public function setViewParam($property, $value)
+    {
         $this->_view->__set($property, $value);
+
         return $this;
     }
 
-    public function __construct( $fromEmail ,$fromName,$charset = 'utf-8') {
+    public function __construct($fromEmail ,$fromName,$charset = 'utf-8')
+    {
         parent::__construct($charset);
 
         $this->setFrom($fromEmail, $fromName);
@@ -52,4 +57,3 @@ class Zrt_Html_Mail_Mailer extends Zend_Mail {
     }
 
 }
-

@@ -1,10 +1,8 @@
 <?php
 
-
 class Zrt_Form_Element_Tinymce
         extends Zend_Form_Element_Textarea
     {
-
 
     public function init()
         {
@@ -22,7 +20,4 @@ class Zrt_Form_Element_Tinymce
                 ->setAttrib( 'class' , 'rich-text' );
         }
 
-
     }
-
-?>

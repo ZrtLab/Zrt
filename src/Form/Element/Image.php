@@ -1,10 +1,8 @@
 <?php
 
-
 class Zrt_Form_Element_Image
         extends Zend_Form_Element_File
     {
-
 
     public function init()
         {
@@ -34,18 +32,15 @@ class Zrt_Form_Element_Image
                 ->setDescription( 'Upload an image with one of the following extensions: jpg, jpeg, gif, png.' );
         }
 
-
     /**
      * Get the thumbnail webpath of the current image
      * @return string
      */
     public function getThumbnail()
         {
-        if ( $filename = $this->getValue() )
-            {
+        if ( $filename = $this->getValue() ) {
             $thumbFilename = 'thumb_' . $filename;
-            if ( file_exists( Zend_Registry::get( 'config' )->filepath->upload->image . DIRECTORY_SEPARATOR . $thumbFilename ) )
-                {
+            if ( file_exists( Zend_Registry::get( 'config' )->filepath->upload->image . DIRECTORY_SEPARATOR . $thumbFilename ) ) {
                 return Zend_Registry::get( 'config' )->webpath->upload->image . '/' . $thumbFilename;
                 }
             }
@@ -53,12 +48,10 @@ class Zrt_Form_Element_Image
         return false;
         }
 
-
     // Override setValue (disabled in Zend_Form_Element_File)
-    public function setValue( $value )
+    public function setValue($value)
         {
         $this->_value = $value;
         }
-
 
     }

@@ -2,10 +2,10 @@
 
 /**
  * S view Helpers is a Loader for Static files
- * providing ability to read prefix from config 
- * and suffix a versioning query string 
+ * providing ability to read prefix from config
+ * and suffix a versioning query string
  *
- * 
+ *
  */
 class Zrt_View_Helper_S extends Zend_View_Helper_HtmlElement
 {

@@ -1,6 +1,5 @@
 <?php
 
-
 class Zrt_Auth_Adapter_DbTable
         extends Zrt_Auth_Adapter_Interface
     {
@@ -19,31 +18,24 @@ class Zrt_Auth_Adapter_DbTable
      */
     protected $_joinCond;
 
-
-    public function setJoin( $name , $cond )
+    public function setJoin($name , $cond)
         {
         $this->_joinName = $name;
         $this->_joinCond = $cond;
+
         return $this;
 
-
         }
-
 
     protected function _authenticateCreateSelect()
         {
         $dbSelect = parent::_authenticateCreateSelect();
-        if ( $this->_joinName )
-            {
+        if ($this->_joinName) {
             $dbSelect->join( $this->_joinName , $this->_joinCond );
             }
-        return $dbSelect;
 
+        return $dbSelect;
 
         }
 
-
     }
-
-
-?>

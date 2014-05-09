@@ -1,19 +1,16 @@
 <?php
 
-
 class Zrt_Controller_Plugin_LangSelector
         extends Zend_Controller_Plugin_Abstract
     {
 
-
-    public function preDispatch( Zend_Controller_Request_Abstract $request )
+    public function preDispatch(Zend_Controller_Request_Abstract $request)
         {
         parent::preDispatch( $request );
 
         $Zrt = new Zend_Session_Namespace( 'Zrt' );
 
-        if ( !isset( $Zrt->config->lang ) )
-            {
+        if ( !isset( $Zrt->config->lang ) ) {
             $zl = new Zend_Locale();
             $Zrt->config->lang = $zl->getLanguage();
             }
@@ -24,15 +21,13 @@ class Zrt_Controller_Plugin_LangSelector
             $Zrt->config->lang = 'en';
             }
 
-        if ( !isset( $Zrt->config->idlang ) )
-            {
+        if ( !isset( $Zrt->config->idlang ) ) {
             $_idioma = new Zrt_Models_Bussines_Idioma();
 
             $Zrt->config->idlang = $_idioma->getByPrefijo(
                             $Zrt->config->lang
                     )->id;
             }
-
 
         $translate = new Zend_Translate(
                         Zend_Translate::AN_GETTEXT ,
@@ -53,15 +48,13 @@ class Zrt_Controller_Plugin_LangSelector
 
         Zend_Validate_Abstract::setDefaultTranslator( $translator );
 
-
         /*         * variables para la vista* */
 
         $viewRenderer =
                 Zend_Controller_Action_HelperBroker::getStaticHelper(
                         'viewRenderer'
         );
-        if ( null === $viewRenderer->view )
-            {
+        if (null === $viewRenderer->view) {
             $viewRenderer->initView();
             }
         $view = $viewRenderer->view;
@@ -70,11 +63,7 @@ class Zrt_Controller_Plugin_LangSelector
 
         /*         * variables para la vista* */
 
-
-
-
         /* translate para Zend_Validate */
-
 
         /* formulario idioma */
         /* fixme formulario idiomapais */
@@ -92,11 +81,8 @@ class Zrt_Controller_Plugin_LangSelector
 //                }
 //            }
 
-
-
         /**/
         /* formulario idioma */
         }
-
 
     }

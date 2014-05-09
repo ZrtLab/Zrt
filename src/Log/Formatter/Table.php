@@ -22,6 +22,7 @@ class Zrt_Log_Formatter_Table implements Zend_Log_Formatter_Interface
             $eventInfo .= $this->formatException($event['info']);
             $eventInfo .= '</td></tr>';
         }
+
         return $eventInfo;
     }
 
@@ -35,6 +36,7 @@ class Zrt_Log_Formatter_Table implements Zend_Log_Formatter_Interface
     protected function formatException(Exception $e)
     {
         $view = new Zend_View(array('scriptPath' => dirname(__FILE__)));
+
         return $view->partial('exception.phtml', array('exception' => $e));
     }
 

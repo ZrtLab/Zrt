@@ -9,7 +9,6 @@
  * @version $Id: Task.php 69 2010-09-08 12:32:03Z jamie $
  */
 
-
 /**
  * Represents a single command line task, with argument verification.
  *
@@ -37,29 +36,23 @@ abstract class Zrt_Cli_Task
      */
     protected $_getoptRules = array( );
 
-
-    public function __construct( Zrt_Controller_Cli $controller )
+    public function __construct(Zrt_Controller_Cli $controller)
         {
         $getopt = $controller->getRequest()->getGetopt();
 
-        if ( $this->_getoptRules )
-            {
+        if ($this->_getoptRules) {
             // Add task-specific rules and re-parse the command line.
             $getopt->addRules( $this->_getoptRules );
             $getopt->parse();
-            foreach ( $this->getGetoptRuleNames() as $var )
-                {
+            foreach ( $this->getGetoptRuleNames() as $var ) {
                 // Store command-line parameters for execution.
-                if ( isset( $getopt->$var ) )
-                    {
+                if ( isset( $getopt->$var ) ) {
                     $this->_parameters[$var] = $getopt->$var;
                     }
                 }
             }
 
-
         }
-
 
     /**
      * Checks that supplied arguments were valid, calls the _execute() function,
@@ -69,15 +62,12 @@ abstract class Zrt_Cli_Task
      */
     public function execute()
         {
-        if ( !$this->_verifyGetoptRules() )
-            {
+        if ( !$this->_verifyGetoptRules() ) {
             throw new Zrt_Cli_Exception( implode( PHP_EOL , $this->_messages ) );
             }
         $this->_execute();
 
-
         }
-
 
     /**
      * Actually performs the task.
@@ -86,14 +76,12 @@ abstract class Zrt_Cli_Task
      */
     abstract protected function _execute();
 
-
     /**
      * Checks that a valid set of parameters was supplied.
      *
      * @return bool
      */
     abstract protected function _verifyGetoptRules();
-
 
     /**
      * Gets the getopt rules for this task.
@@ -104,9 +92,7 @@ abstract class Zrt_Cli_Task
         {
         return $this->_getoptRules;
 
-
         }
-
 
     /**
      * Gets the names associated with the getopt rules.
@@ -116,14 +102,12 @@ abstract class Zrt_Cli_Task
     public function getGetoptRuleNames()
         {
         $ruleNames = array( );
-        foreach ( array_keys( $this->_getoptRules ) as $rule )
-            {
+        foreach ( array_keys( $this->_getoptRules ) as $rule ) {
             list($ruleNames[]) = explode( '|' , $rule );
             }
+
         return $ruleNames;
 
-
         }
-
 
     }

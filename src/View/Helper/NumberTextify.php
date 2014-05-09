@@ -8,7 +8,6 @@
  * @version $Id: NumberTextify.php 69 2010-09-08 12:32:03Z jamie $
  */
 
-
 /**
  * Converts a number from an integer into a string representation
  *
@@ -60,112 +59,84 @@ class Zrt_View_Helper_NumberTextify
         13 => "Trillion"
     );
 
-
     /**
      * Turns an integer into a text representation of the same.
      *
-     * @param string $resource
+     * @param  string $resource
      * @return string
      */
-    public function numberTextify( $number )
+    public function numberTextify($number)
         {
-        if ( !$number )
-            {
+        if (!$number) {
             return "Zero";
             }
 
         $return = array( );
         $number = "$number";
-        if ( !ctype_digit( $number ) )
-            {
+        if ( !ctype_digit( $number ) ) {
             throw new Zrt_Exception( "Must supply digits only to number textify." );
             }
         $magnitude = strlen( $number );
 
-        for ( $i = 0; $i < $magnitude; $i++ )
-            {
+        for ($i = 0; $i < $magnitude; $i++) {
             $unit = $number[$i];
-            if ( !$unit )
-                {
+            if (!$unit) {
                 // No value at this position.
                 continue;
                 }
             $order = $magnitude - $i;
-            if ( $order == 1 )
-                {
+            if ($order == 1) {
                 // Units.
-                if ( $magnitude > 2 && ($number[$magnitude - 2] == "0") )
-                    {
+                if ( $magnitude > 2 && ($number[$magnitude - 2] == "0") ) {
                     // This is part of a larger number, and there are no tens.
                     $return[] = "And";
                     }
                 $return[] = self::$_units[$unit];
-                }
-            elseif ( $order == 2 )
-                {
+                } elseif ($order == 2) {
                 // Tens
-                if ( $magnitude > 2 )
-                    {
+                if ($magnitude > 2) {
                     // This is part of a larger number.
                     $return[] = "And";
                     }
-                if ( $unit == 1 )
-                    {
+                if ($unit == 1) {
                     // Fifteen
                     $return[] = self::$_teens[intval( $number[$i + 1] )];
 
                     // We've already parsed the units, so skip the next number.
                     $i++;
-                    }
-                else
-                    {
+                    } else {
                     // Twenty
                     $return[] = self::$_tens[$unit];
                     }
-                }
-            else
-                {
-                if ( array_key_exists( $order , self::$_orders ) )
-                    {
+                } else {
+                if ( array_key_exists( $order , self::$_orders ) ) {
                     // e.g. One Million.
                     $return[] = self::$_units[$unit] . ' ' . self::$_orders[$order];
-                    }
-                else
-                    {
-                    if ( $order % 3 == 0 )
-                        {
+                    } else {
+                    if ($order % 3 == 0) {
                         // e.g. Five Hundred Thousand
                         $interim = ($number[$i + 1] || $number[$i + 2]) ? '' : (' ' . self::$_orders[$order - 2]);
                         $return[] = self::$_units[$unit] . ' ' . self::$_orders[3] . $interim;
-                        }
-                    elseif ( $order % 3 == 2 )
-                        {
+                        } elseif ($order % 3 == 2) {
                         // Fifty Thousand
-                        if ( $magnitude > $order && ($number[$i - 1] != "0") )
-                            {
+                        if ( $magnitude > $order && ($number[$i - 1] != "0") ) {
                             // This is part of a larger number.
                             $return[] = "And";
                             }
-                        if ( $unit == 1 )
-                            {
+                        if ($unit == 1) {
                             // Fifteen
                             $return[] = self::$_teens[intval( $number[$i + 1] )] . ' ' . self::$_orders[$order - 1];
 
                             // We've already parsed the units, so skip the next number.
                             $i++;
-                            }
-                        else
-                            {
+                            } else {
                             // Twenty
                             $interim = ($number[$i + 1]) ? '' : (' ' . self::$_orders[$order - 1]);
                             $return[] = self::$_tens[$unit] . $interim;
                             }
-                        }
-                    elseif ( $order % 3 == 1 )
-                        {
+                        } elseif ($order % 3 == 1) {
                         // One Hundred And Five Thousand
-                        if ( $magnitude > $order )
-                            {
+                        if ($magnitude > $order) {
                             // This is part of a larger number.
                             $return[] = "And";
                             }
@@ -174,13 +145,9 @@ class Zrt_View_Helper_NumberTextify
                     }
                 }
             }
-        return implode( " " , $return );
 
+        return implode( " " , $return );
 
         }
 
-
     }
-
-
-?>

@@ -42,4 +42,3 @@ class Zrt_Controller_Action_Helper_Logger extends Zend_Controller_Action_Helper_
     }
 
 }
-

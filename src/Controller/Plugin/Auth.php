@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Maneja autorizaciones con Zend_Auth
  * @author acastillo
@@ -73,13 +72,13 @@ class Zrt_controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
         }
 
 //        $role = "invitado";
-//        
+//
 //        if ( $this->_auth->hasIdentity() )
 //            {
 //            $data = $this->_auth->getIdentity();
 //            $role = strtolower( $data['rol'] );
 //            }
-//        
+//
 //
 //
 //        //$role = "invitado";
@@ -134,6 +133,7 @@ class Zrt_controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
         if (in_array($rq, $this->_noLogin)) {
             $result = false;
         }
+
         return $result;
     }
 

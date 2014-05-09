@@ -1,12 +1,10 @@
 <?php
 
-
 class Zrt_Controller_Plugin_Seo
         extends Zend_Controller_Plugin_Abstract
     {
 
-
-    public function routeStartup( $request )
+    public function routeStartup($request)
         {
         $url = $request->getRequestUri();
 
@@ -23,6 +21,5 @@ class Zrt_Controller_Plugin_Seo
                 $dirPart . '/products/show/product/' . $product . '/category/' . $category
         );
         }
-
 
     }

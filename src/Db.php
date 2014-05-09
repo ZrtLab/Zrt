@@ -13,7 +13,6 @@
  * @defgroup Zrt_Db Zrt Database
  */
 
-
 /**
  * Database connection broker, with profiling and logging support.
  *
@@ -43,30 +42,24 @@ class Zrt_Db
      */
     protected static $_profiler = null;
 
-
-    public static function setDefaultAdapterName( $adapter )
+    public static function setDefaultAdapterName($adapter)
         {
-        if ( !is_string( $adapter ) )
-            {
+        if ( !is_string( $adapter ) ) {
             throw new Zrt_Exception( "$adapter is not a valid string to use as an adapter name." );
             }
         self::$_defaultAdapterName = $adapter;
 
-
         }
-
 
     public static function getDefaultAdapterName()
         {
-        if ( null === self::$_defaultAdapterName )
-            {
+        if (null === self::$_defaultAdapterName) {
             throw new Zrt_Exception( "Default adapter name has not been set." );
             }
+
         return self::$_defaultAdapterName;
 
-
         }
-
 
     /**
      * Returns the application's default adapter.
@@ -83,30 +76,26 @@ class Zrt_Db
     /**
      * Instantiates a database adapter handle.
      *
-     * @param string $name The internal name of the database to connect to.
+     * @param  string $name The internal name of the database to connect to.
      * @return mixed
      */
-    public static function getAdapter( $name )
+    public static function getAdapter($name)
         {
-        if ( Zend_Registry::isRegistered( 'databases' ) )
-            {
+        if ( Zend_Registry::isRegistered( 'databases' ) ) {
             $databaseRegistry = Zend_Registry::get( 'databases' );
             }
 
-        if ( !isset( $databaseRegistry ) || !isset( $databaseRegistry->$name ) )
-            {
+        if ( !isset( $databaseRegistry ) || !isset( $databaseRegistry->$name ) ) {
             $instance = Zend_Registry::getInstance();
             $config = Zend_Registry::get( 'config' )->database->$name;
-            if ( null == $config )
-                {
+            if (null == $config) {
                 throw new Zrt_Exception( "$name is not a valid database to connect to." );
                 }
             $connection = $config->connection->toArray();
 
             $type = $config->type ? $config->type : 'relational';
             $factory = 'Zrt_Db_' . ucfirst( $type );
-            if ( !class_exists( $factory , true ) )
-                {
+            if ( !class_exists( $factory , true ) ) {
                 throw new Zrt_Exception( $type . " is not a valid database type" );
                 }
 
@@ -117,6 +106,7 @@ class Zrt_Db
             $databaseRegistry->$name = $db;
             Zend_Registry::set( 'databases' , $databaseRegistry );
             }
+
         return $databaseRegistry->$name;
 
 
@@ -130,11 +120,11 @@ class Zrt_Db
      */
     public static function getLoadedAdapters()
         {
-        if ( !Zend_Registry::isRegistered( 'databases' ) )
-            {
+        if ( !Zend_Registry::isRegistered( 'databases' ) ) {
             return array( );
             }
-        return array_keys( ( array ) Zend_Registry::get( 'databases' ) );
+
+        return array_keys( (array) Zend_Registry::get( 'databases' ) );
 
 
         }
@@ -145,8 +135,7 @@ class Zrt_Db
      */
     public static function enableProfiling()
         {
-        foreach ( self::getLoadedAdapters() as $adapter )
-            {
+        foreach ( self::getLoadedAdapters() as $adapter ) {
             self::getAdapter( $adapter )->setProfiler( self::getProfiler() );
             }
         self::$_profiling = true;
@@ -162,16 +151,14 @@ class Zrt_Db
      */
     public static function getProfiler()
         {
-        if ( null == self::$_profiler )
-            {
+        if (null == self::$_profiler) {
             self::$_profiler = new Zend_Db_Profiler_Firebug( 'All DB Queries' );
             self::$_profiler->setEnabled( true );
             }
+
         return self::$_profiler;
 
-
         }
-
 
     /**
      * Determines whether or not the application is being profiled.
@@ -182,11 +169,6 @@ class Zrt_Db
         {
         return self::$_profiling;
 
-
         }
 
-
     }
-
-
-?>

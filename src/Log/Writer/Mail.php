@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 
+ *
  */
 class Zrt_Log_Writer_Mail extends Zend_Log_Writer_Mail
 {
@@ -20,15 +20,15 @@ class Zrt_Log_Writer_Mail extends Zend_Log_Writer_Mail
      * Build a log writer which write to the provided email addresses
      *
      * @param array $options an array of options for the log writer,
-     * allowed values are (with their default value)
-     * - addresses: string or array of email addresses (required)
-     * - sender:    email address for the from header
-     *              (default: null {@see Zend_Mail::setDefaultFrom})
-     * - priority:  a priority filter, (default = Zend_Log::ERR)
-     * - project:   an identifier for the current project (default = null)
-     * - subject:   a string automatically prepended to subject
-     *              (default = 'Errors in project $name')
-     *              {@see Zend_Log_Writer_Mail::setSubjectPrependText}
+     *                       allowed values are (with their default value)
+     *                       - addresses: string or array of email addresses (required)
+     *                       - sender:    email address for the from header
+     *                       (default: null {@see Zend_Mail::setDefaultFrom})
+     *                       - priority:  a priority filter, (default = Zend_Log::ERR)
+     *                       - project:   an identifier for the current project (default = null)
+     *                       - subject:   a string automatically prepended to subject
+     *                       (default = 'Errors in project $name')
+     *                       {@see Zend_Log_Writer_Mail::setSubjectPrependText}
      */
     public function __construct(array $options = array())
     {
@@ -95,6 +95,7 @@ class Zrt_Log_Writer_Mail extends Zend_Log_Writer_Mail
     {
         $layout = new Zend_Layout(dirname(__FILE__));
         $layout->setLayout('log-email');
+
         return $layout;
     }
 
