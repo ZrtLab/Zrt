@@ -1,12 +1,5 @@
 <?php
 
-/**
- * Zrt
- *
- * @category Zrt
- * @copyright Copyright (c) 2010 Jamie Talbot (http://jamietalbot.com)
- * @version $Id: Application.php 69 2010-09-08 12:32:03Z jamie $
- */
 require_once 'Zend/Application.php';
 
 /**

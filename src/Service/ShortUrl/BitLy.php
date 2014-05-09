@@ -1,32 +1,5 @@
 <?php
-/**
- * Zend Framework
- *
- * LICENSE
- *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
- *
- * @category   Zend
- * @package    Zend_Service_ShortUrl
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: $
- */
 
-/**
- * Bit.ly API implementation
- *
- * @category   Zend
- * @package    Zend_Service_ShortUrl
- * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */
 class Zrt_Service_ShortUrl_BitLy extends Zend_Service_ShortUrl_AbstractShortener
 {
     /**
@@ -50,6 +23,12 @@ class Zrt_Service_ShortUrl_BitLy extends Zend_Service_ShortUrl_AbstractShortener
      */
     protected $_apiKey;
     
+    /**
+     * Store the username and the apiKey
+     *
+     * @param string $username 
+     * @param string $apiKey 
+     */
     public function __construct($username, $apiKey){
         $this->_username = $username;
         $this->_apiKey = $apiKey;
@@ -69,6 +48,7 @@ class Zrt_Service_ShortUrl_BitLy extends Zend_Service_ShortUrl_AbstractShortener
         $serviceUri = 'http://api.bit.ly/v3/shorten';
         
         $this->getHttpClient()->setUri($serviceUri);
+        $this->getHttpClient()->setMethod(Zend_Http_Client::GET);
         $this->getHttpClient()->resetParameters();
         $this->getHttpClient()->setParameterGet(array(
             'login' => $this->_username,
@@ -77,6 +57,7 @@ class Zrt_Service_ShortUrl_BitLy extends Zend_Service_ShortUrl_AbstractShortener
         ));
         
         $response = $this->getHttpClient()->request();
+        
         if ($response->isSuccessful()) {
             $results = Zend_Json::decode($response->getBody());
             if ($results['status_txt'] == 'OK' && isset($results['data']['url'])) {
