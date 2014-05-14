@@ -1,19 +1,5 @@
 <?php
 
-/**
- * Zrt PHP Library
- *
- * @category Zrt
- * @copyright Copyright (c) 2008-2010 Jamie Talbot (http://jamietalbot.com)
- * @version $Id: NumberTextify.php 69 2010-09-08 12:32:03Z jamie $
- */
-
-/**
- * Converts a number from an integer into a string representation
- *
- * @class Zrt_View_Helper_NumberTextify
- * @ingroup Zrt_View_Helpers
- */
 class Zrt_View_Helper_NumberTextify
         extends Zend_View_Helper_Abstract
     {
