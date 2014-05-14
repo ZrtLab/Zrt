@@ -1,26 +1,8 @@
 <?php
 
-/**
- * Slug filter
- *
- * Filter used to generate slug
- *
- * @copyright  2010 SANIsoft Technologies Pvt. Ltd.
- * @link	   http://www.sanisoft.com/
- */
-
-/**
- * Slug filter
- *
- * Filter used to generate slug
- *
- * @copyright  2010 SANIsoft Technologies Pvt. Ltd.
- * @version	Release: 1.0
- * @link	   http://www.sanisoft.com/
- */
 class Zrt_Filter_Slug
         implements Zend_Filter_Interface
-    {
+{
 
     public $field;
     public $model;
@@ -31,13 +13,13 @@ class Zrt_Filter_Slug
      * @param array $parameters Parameters used to define field name and model object
      */
     public function __construct(array $parameters)
-        {
+    {
         // If field name and model object are provided then store them in class variables
         if ( isset( $parameters['field'] ) && isset( $parameters['model'] ) ) {
             $this->field = $parameters['field'];
             $this->model = $parameters['model'];
-            }
         }
+    }
 
     /**
      * Method used to generate slug
@@ -47,7 +29,7 @@ class Zrt_Filter_Slug
      * @return string Generated slug
      */
     public function filter($value , $conditions = null)
-        {
+    {
         // Lowercase the string
         $value = strtolower( $value );
         // Generate slug by removing unwanted (other than alphanumeric and dash [-]) characters from the string
@@ -62,17 +44,17 @@ class Zrt_Filter_Slug
             // Need to append ' AND ' to existing conditions
             if ($conditions) {
                 $conditions .= ' AND ';
-                }
+            }
             // Build conditions for slug duplication
             $conditions .= $this->field . ' LIKE "' . $value . '%"';
             // Get matching slugs for currently generated slug
             $select = $this->model->select();
             $select->from( $this->model , array( $this->field ) )
-                    ->where( $conditions );
+                ->where( $conditions );
             // Store matching slugs for currently generated slug
             foreach ( $this->model->fetchAll( $select ) as $record ) {
                 $slugs[] = $record->{$this->field};
-                }
+            }
             // If matching slugs for currently generated slug then try
             // to append -1, -2, ... to currently generated
             // slug to avoid duplication
@@ -85,14 +67,14 @@ class Zrt_Filter_Slug
                     if ( !in_array( $value . '-' . $index , $slugs ) ) {
                         $value .= '-' . $index;
                         break;
-                        }
+                    }
                     // Increment counter by 1
                     $index++;
-                    }
                 }
             }
+        }
         // Return generated slug
         return $value;
-        }
-
     }
+
+}

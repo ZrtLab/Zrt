@@ -1,10 +1,7 @@
 <?php
 
-/**
- *
- */
 final class Zrt_Version
-    {
+{
 
     /**
      * Get current Zrt version
@@ -12,8 +9,8 @@ final class Zrt_Version
      * @return string
      */
     public static function getVersion()
-        {
+    {
         return '1.0.0';
-        }
-
     }
+
+}

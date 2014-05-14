@@ -1,25 +1,12 @@
 <?php
 
 /**
- * Zrt
- *
- * @category Zrt
- * @copyright Copyright (c) 2010 Jamie Talbot (http://jamietalbot.com)
- * @version $Id: Resource.php 69 2010-09-08 12:32:03Z jamie $
- */
-/**
- * Functionality pertaining to static HTTP-deployed resources.
- *
- * @defgroup Zrt_Resource Zrt Resource
- */
-
-/**
  * Provides resource versioning capabilities.
  *
  * @ingroup Zrt_Resource
  */
 class Zrt_Resource
-    {
+{
 
     const RESOURCE_LIST = 'configs/resources.ini';
 
@@ -30,12 +17,11 @@ class Zrt_Resource
     protected static $_resources = null;
 
     public static function setupResources()
-        {
+    {
         if (null === self::$_resources) {
             self::$_resources = new Zend_Config_Ini( APPLICATION_PATH . '/' . self::RESOURCE_LIST );
-            }
-
         }
+    }
 
     /**
      * Returns the URL to a static file, prepended with the base URL,
@@ -45,10 +31,10 @@ class Zrt_Resource
      * @return string
      */
     public static function version($resource)
-        {
+    {
         if ( Zrt_Application::isDevelopment() ) {
             $version = filemtime( $resource );
-            } else {
+        } else {
             self::setupResources();
             list($path , $extension) = explode( '.' , $resource , 2 );
             $subSections = explode( '/' , $path );
@@ -58,19 +44,19 @@ class Zrt_Resource
                 if ( !isset( $versionedResource->$subSection ) ) {
                     $versionedResource = null;
                     break;
-                    }
-                $versionedResource = $versionedResource->$subSection;
                 }
+                $versionedResource = $versionedResource->$subSection;
+            }
             if (null == $versionedResource) {
                 return Zrt_Application::tenantUrl() . '/' . $resource;
-                }
-            $version = $versionedResource;
             }
-
-        return Zrt_Application::tenantUrl() . '/' . preg_replace( '/\.([a-z]+?)$/' ,
-                                                                  ".v$version.\$1" ,
-                                                                  $resource );
-
+            $version = $versionedResource;
         }
 
+        return Zrt_Application::tenantUrl() . '/' . preg_replace( '/\.([a-z]+?)$/' ,
+            ".v$version.\$1" ,
+            $resource );
+
     }
+
+}

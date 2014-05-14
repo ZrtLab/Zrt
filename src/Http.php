@@ -1,25 +1,7 @@
 <?php
 
-/**
- * Zrt
- *
- * @category Zrt
- * @copyright Copyright (c) 2010 Jamie Talbot (http://jamietalbot.com)
- * @version $Id: Http.php 69 2010-09-08 12:32:03Z jamie $
- */
-/**
- * HTTP-related functionality
- *
- * @defgroup Zrt_Http Zrt HTTP
- */
-
-/**
- * Defines useful HTTP-related constants and functionality.
- *
- * @ingroup Zrt_Http
- */
 abstract class Zrt_Http
-    {
+{
 
     const CONTINUE_REQUEST = 100;
     const SWITCH_PROTOCOLS = 101;
@@ -61,4 +43,4 @@ abstract class Zrt_Http
     const GATEWAY_TIMEOUT = 504;
     const HTTP_VERSION_NOT_SUPPORTED = 505;
 
-    }
+}

@@ -1,19 +1,5 @@
 <?php
-/**
- * Zrt PHP Library
- *
- * @category Zrt
- * @package Zrt_Session
- * @copyright Copyright (c) 2008-2010 Jamie Talbot (http://jamietalbot.com)
- * @version $Id: Cache.php 69 2010-09-08 12:32:03Z jamie $
- */
 
-/**
- * Provides a cached backed for sessions.
- *
- * @category Zrt
- * @package Zrt_Session
- */
 class Zrt_Session_SaveHandler_Cache implements Zend_Session_SaveHandler_Interface
 {
     protected $_sessionCacheName = 'default';
