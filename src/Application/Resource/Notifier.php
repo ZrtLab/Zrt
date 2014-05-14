@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @author slovacus
+ * @author slovacus 
  */
 class Zrt_Application_Resource_Notifier extends Zend_Application_Resource_ResourceAbstract
 {
@@ -39,7 +39,7 @@ class Zrt_Application_Resource_Notifier extends Zend_Application_Resource_Resour
      * Return the log plugin resource
      *
      * @throws Zend_Application_Resource_Exception if log is not configured
-     *                                             using plugin resource syntax (i.e. via application.ini)
+     * using plugin resource syntax (i.e. via application.ini)
      * @return Zend_Log
      */
     protected function getLog()

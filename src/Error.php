@@ -1,23 +1,5 @@
 <?php
 
-/**
- * Zrt
- *
- * @category Zrt
- * @copyright Copyright (c) 2010 Jamie Talbot (http://jamietalbot.com)
- * @version $Id: Error.php 72M 2010-09-20 21:32:08Z (local) $
- */
-/**
- * Error handling functionality
- *
- * @defgroup Zrt_Error Zrt Error
- */
-
-/**
- * Provides error triggering and handling.
- *
- * @ingroup Zrt_Error
- */
 class Zrt_Error
     {
 

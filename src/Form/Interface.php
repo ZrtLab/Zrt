@@ -17,6 +17,7 @@ interface Zrt_Form_Interface
 
     public function _addContentElement();
 
-    public function _setDisplayGroup();
+    public function init();
 
+    public function _setDisplayGroup();
 }
