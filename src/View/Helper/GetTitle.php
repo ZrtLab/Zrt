@@ -10,11 +10,11 @@ class Zrt_View_Helper_GetTitle
 
     public function getTitle()
     {
-       $title=$this->view->headTitle();
-       $title=str_replace(array('<title>', '</title>'), '', $title);
-       $titles=explode($this->view->headTitle()->getSeparator(), $title);
+        $title=$this->view->headTitle();
+        $title=str_replace(array('<title>', '</title>'), '', $title);
+        $titles=explode($this->view->headTitle()->getSeparator(), $title);
 
-       return $titles[count($titles)-1];
+        return $titles[count($titles)-1];
     }
 
     /**
