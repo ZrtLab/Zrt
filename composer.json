@@ -18,7 +18,7 @@
     "homepage": "http://github.com/zrt",
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework1": "1.12.5"
+        "zendframework/zendframework1": "1.*"
     },
     "require-dev": {
         "fzaninotto/faker": "dev-master",
