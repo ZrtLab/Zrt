@@ -1,6 +1,8 @@
 <?php
 
-class Zrt_Application_Resource_Recaptcha extends Zend_Application_Resource_ResourceAbstract
+namespace Zrt\Application\Resource;
+
+class Recaptcha extends Zend_Application_Resource_ResourceAbstract
 {
 
     public function init()

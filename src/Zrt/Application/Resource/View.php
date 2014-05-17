@@ -1,12 +1,10 @@
 <?php
 
-class Zrt_Application_Resource_View extends Zend_Application_Resource_View
+namespace Zrt\Application\Resource;
+
+class View extends Zend_Application_Resource_View
 {
 
-    /**
-     * @author slovacus
-     * @return type
-     */
     public function getView()
     {
         $this->_view = parent::getView();

@@ -1,6 +1,8 @@
 <?php
 
-class Zrt_Controller_Action
+namespace Zrt\Controller;
+
+class Action
     extends Zend_Controller_Action
 {
 

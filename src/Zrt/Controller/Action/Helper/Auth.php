@@ -1,11 +1,8 @@
 <?php
 
-/**
- * Description of Auth
- *
- * @author Luis Mayta
- */
-class Zrt_Controller_Action_Helper_Auth extends Zend_Controller_Action_Helper_Abstract
+namespace Zrt\Controller\Action\Helper;
+
+class Auth extends Zend_Controller_Action_Helper_Abstract
 {
 
     protected $view;

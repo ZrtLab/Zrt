@@ -1,9 +1,8 @@
 <?php
 
-/**
- * @author slovacus 
- */
-class Zrt_Application_Resource_Notifier extends Zend_Application_Resource_ResourceAbstract
+namespace Zrt\Application\Resource;
+
+class Notifier extends Zend_Application_Resource_ResourceAbstract
 {
 
     /**

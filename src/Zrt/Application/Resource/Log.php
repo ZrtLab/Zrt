@@ -1,6 +1,8 @@
 <?php
 
-class Zrt_Application_Resource_Log extends Zend_Application_Resource_Log
+namespace Zrt\Application\Resource;
+
+class Log extends Zend_Application_Resource_Log
 {
 
     public function init()

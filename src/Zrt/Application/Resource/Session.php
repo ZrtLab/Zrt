@@ -1,9 +1,8 @@
 <?php
 
-/**
- *@author slovacus
- */
-class Zrt_Application_Resource_Session extends Zend_Application_Resource_Session
+namespace Zrt\Application\Resource;
+
+class Session extends Zend_Application_Resource_Session
 {
 
     private $session;
