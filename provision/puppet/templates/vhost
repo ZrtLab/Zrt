@@ -1,0 +1,42 @@
+<VirtualHost *:80>
+ServerAdmin slovacus@gmail.com
+ServerName local.nuestrokotear.ec
+ 
+DocumentRoot /var/www/public
+ 
+<Directory /var/www/public>
+	SetEnv APPLICATION_ENV local
+	Options Indexes FollowSymLinks MultiViews
+	AllowOverride all
+	Order allow,deny
+	allow from all
+</Directory>
+<Directory />
+	Options FollowSymLinks
+	AllowOverride None
+</Directory>
+ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+<Directory "/usr/lib/cgi-bin">
+	AllowOverride FileInfo
+	Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+	Order allow,deny
+	Allow from all
+</Directory>
+ 
+ErrorLog ${APACHE_LOG_DIR}/local.nuestrokotear.ec-error.log
+
+# Possible values include: debug, info, notice, warn, error, crit,
+# alert, emerg.
+LogLevel warn
+ 
+CustomLog ${APACHE_LOG_DIR}/local.nuestrokotear.ec-access.log combined
+ 
+Alias /doc/ "/usr/share/doc/"
+<Directory "/usr/share/doc/">
+	Options Indexes MultiViews FollowSymLinks
+	AllowOverride None
+	Order deny,allow
+	Allow from all
+</Directory>
+ 
+</VirtualHost>
